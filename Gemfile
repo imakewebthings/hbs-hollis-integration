@@ -3,7 +3,7 @@ ruby '2.0.0'
 
 gem 'bourbon', '~> 3.1.8'
 gem 'foreman', '~> 0.63.0'
-gem 'haml', '~> 4.0.5'
+gem 'haml-rails', '~> 0.5.3'
 gem 'jquery-rails', '~> 3.0.4'
 gem 'pg', '~> 0.17.1'
 gem 'rails', '4.0.2'
@@ -19,7 +19,8 @@ end
 
 group :development, :test do
   gem 'guard-spork', '~> 1.5.1'
-  gem 'rspec-rails', '~> 2.14.1'
+  gem 'rspec', '~> 3.0.0.beta'
+  gem 'rspec-rails', '~> 3.0.0.beta'
   gem 'spork-rails', '~> 4.0.0'
 end
 

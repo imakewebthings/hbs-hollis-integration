@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Hbshollis::Application.config.secret_key_base = '77eee8fc7523aa539dc66a372ced393556f8923fc2c3fdf41361bd27ed48e9778ea4b541dc0b14ef634ff3a72bc64fee21334e40f0fa717cb1d0a2d169971043'
+Hbshollis::Application.config.secret_key_base = ENV['COOKIE_SECRET']
