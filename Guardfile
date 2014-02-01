@@ -27,16 +27,19 @@ guard :rspec, after_all_pass: false, cmd: 'rspec --drb' do
   end
 
   watch('app/controllers/application_controller.rb') do
-    "spec/controllers"
+    [
+      "spec/controllers",
+      "spec/features"
+    ]
   end
 
-  watch(%r{^app/views/(.+)/.*\.(erb|haml|json|rb)$}) do |m|
+  watch(%r{^app/views/(.+)/.*\.(erb|slim|json|rb)$}) do |m|
     "spec/features/#{m[1]}_spec.rb"
   end
 end
 
 guard 'livereload' do
-  watch(%r{app/views/.+\.(erb|haml|slim)$})
+  watch(%r{app/views/.+\.(erb|slim)$})
   watch(%r{app/helpers/.+\.rb})
   watch(%r{public/.+\.(css|js|html)})
   watch(%r{config/locales/.+\.yml})

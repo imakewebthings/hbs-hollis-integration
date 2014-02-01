@@ -3,7 +3,7 @@ ruby '2.0.0'
 
 gem 'bourbon', '~> 3.1.8'
 gem 'foreman', '~> 0.63.0'
-gem 'haml-rails', '~> 0.5.3'
+gem 'slim-rails', '~> 2.1.0'
 gem 'jquery-rails', '~> 3.0.4'
 gem 'pg', '~> 0.17.1'
 gem 'rails', '4.0.2'
