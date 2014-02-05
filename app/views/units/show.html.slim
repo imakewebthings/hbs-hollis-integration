@@ -1,4 +1,8 @@
 = render 'shared/header', active: 'unit'
-= render 'units/list'
-.stackview-container
-  p= "#{@id} StackView"
+main.three-column
+  section.column
+    = render 'units/list'
+  section.column
+    .stackview-container
+      p= "#{@id} StackView"
+  section.column

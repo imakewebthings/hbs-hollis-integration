@@ -1,4 +1,8 @@
 = render 'shared/header', active: 'author'
-= render 'authors/list'
-.stackview-container
-  p= "#{@id} StackView"
+main.three-column
+  section.column
+    = render 'authors/list'
+  section.column
+    .stackview-container
+      p= "#{@id} StackView"
+  section.column

@@ -1,3 +1,7 @@
 = render 'shared/fat_header'
 = render 'shared/search_by', active: 'author'
-= render 'authors/list'
+main.three-column
+  section.column
+    = render 'authors/list'
+  section.column
+  section.column

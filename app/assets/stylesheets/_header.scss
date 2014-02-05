@@ -1,0 +1,27 @@
+header {
+  background:tint($sky, 30%);
+  color:shade($sky, 30%);
+  position:relative;
+  padding:0 10px;
+
+  h1 {
+    text-shadow:1px 1px 1px rgba(255,255,255,.4);
+  }
+
+  a {
+    color:shade($sky, 50%);
+    text-decoration:none;
+  }
+
+  p {
+    font-size:.8em;
+  }
+}
+
+.fat-inner {
+  width:100%;
+  max-width:460px;
+  padding:20px 0;
+  margin:0 auto;
+  text-align:center;
+}

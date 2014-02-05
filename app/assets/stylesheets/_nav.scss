@@ -1,0 +1,57 @@
+.search-by {
+  text-align:center;
+  margin:12px 0;
+
+  header & {
+    position:absolute;
+    right:10px;
+    top:10px;
+  }
+
+  h3 {
+    color:#aaa;
+    font-size:1em;
+    text-transform:uppercase;
+
+    header & {
+      display:none;
+    }
+  }
+
+  ul {
+    display:inline-block;
+    list-style:none;
+    border-radius:10px;
+    overflow:hidden;
+  }
+
+  li {
+    display:inline-block;
+
+    &:first-child a {
+      border-left:0;
+    }
+
+    &:last-child a {
+      border-right:0;
+    }
+  }
+
+  a {
+    text-decoration:none;
+    display:block;
+    padding:8px 0;
+    line-height:1;
+    width:100px;
+    background:shade($sky, 50%);
+    color:#fff;
+    border-left:1px solid shade($sky, 40%);
+    border-right:1px solid shade($sky, 60%);
+
+    &:hover, &:focus, &.active {
+      background:shade($skyPink, 30%);
+      border-left-color:shade($skyPink, 40%);
+      border-right-color:shade($skyPink, 20%);
+    }
+  }
+}

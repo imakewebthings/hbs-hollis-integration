@@ -1,3 +1,7 @@
 = render 'shared/fat_header'
 = render 'shared/search_by', active: 'topic'
-= render 'topics/list'
+main.three-column
+  section.column
+    = render 'topics/list'
+  section.column
+  section.column

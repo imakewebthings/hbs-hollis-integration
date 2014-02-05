@@ -1,0 +1,43 @@
+.search-list {
+  position:relative;
+  border:1px solid tint($sky, 30%);
+  border-radius:10px;
+  overflow:hidden;
+
+  input {
+    display:block;
+    width:100%;
+    border:0;
+    border-bottom:1px solid tint($sky, 30%);
+    padding:6px 8px;
+    margin:0;
+  }
+
+  select {
+    display:none;
+  }
+
+  ul {
+    min-height:120px;
+    max-height:300px;
+    overflow:auto;
+  }
+
+  li a {
+    text-decoration:none;
+    display:block;
+    padding:4px 8px;
+    background:tint($sky, 80%);
+
+  }
+
+  ul li a {
+     &:hover, &:focus, &.active {
+      background:tint($skyPink, 40%);
+    }
+  }
+
+  li:nth-child(odd) a {
+    background:tint($sky, 60%);
+  }
+}
