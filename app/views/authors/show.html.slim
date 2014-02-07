@@ -3,6 +3,5 @@ main.three-column
   section.column
     = render 'authors/list'
   section.column
-    .stackview-container
-      p= "#{@id} StackView"
+    .stackview-container data-author=format_author_for_lc(@active_author) data-ribbon=@active_author.name
   section.column

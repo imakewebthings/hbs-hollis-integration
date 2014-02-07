@@ -10,8 +10,10 @@ describe '/authors' do
 end
 
 describe '/authors/:author' do
+  let(:contributor) { create :contributor }
+
   before do
-    visit author_path 'test'
+    visit author_path contributor.name_slug
   end
 
   specify { page.should have_selector 'header nav' }

@@ -18,6 +18,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'factory_girl', '~> 4.3.0'
   gem 'guard-spork', '~> 1.5.1'
   gem 'rspec', '~> 3.0.0.beta'
   gem 'rspec-rails', '~> 3.0.0.beta'

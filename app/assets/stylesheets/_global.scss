@@ -6,6 +6,10 @@ html, body {
   height:100%;
 }
 
+html {
+  overflow-y:scroll;
+}
+
 body {
   font-size:20px;
   line-height:1.3;

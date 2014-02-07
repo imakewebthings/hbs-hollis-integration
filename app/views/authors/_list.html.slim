@@ -4,7 +4,5 @@
     option value='az' A-Z
     option value='za' Z-A
   ul
-    li: a href='#' Jane Doe
-    li: a href='#' John Smith
-    li: a href='#' Melissa Shaffer
-    li: a href='#' David Weinberger
+    - for author in @authors do
+      li= link_to author.name, author_path(author.name_slug), class: active_author_class(author, @active_author)

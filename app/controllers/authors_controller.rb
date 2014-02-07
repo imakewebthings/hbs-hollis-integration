@@ -1,8 +1,11 @@
 class AuthorsController < ApplicationController
   def index
+    @authors = Contributor.authors
+    @active_author = nil
   end
 
   def show
-    @id = params[:id]
+    @authors = Contributor.authors
+    @active_author = Contributor.author_by_slug params[:id]
   end
 end
