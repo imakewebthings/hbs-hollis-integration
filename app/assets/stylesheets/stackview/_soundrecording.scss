@@ -4,7 +4,7 @@
 	margin:0 0 1px 0;
 
 	&:before {
-		content:url('images/icon-note.png');
+		content:url(asset-path('stackview/icon-note.png'));
 		position:absolute;
 		left:10px;
 		top:4px;

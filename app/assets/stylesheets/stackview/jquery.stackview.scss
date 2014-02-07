@@ -1,7 +1,7 @@
 /*
 	Stack View - The jQuery virtual stack plugin
 	by The Harvard Library Innovation Lab
-	
+
 	Dual licensed under MIT and GPL.
 */
 
@@ -13,7 +13,7 @@
 	height:520px;
 	padding:0 0 0 65px;
 	overflow:hidden;
-	
+
 	* {
 		margin:0;
 		padding:0;
@@ -29,9 +29,9 @@
 	position:relative;
 	z-index:2;
 	-webkit-overflow-scrolling:touch;
-	
+
 	&:before {
-		background:url('images/bookEnd-prev.png');
+		background:url(asset-path('stackview/bookEnd-prev.png'));
 		content:"";
 		display:block;
 		width:212px;
@@ -39,20 +39,20 @@
 		position:relative;
 		z-index:9999; // Needs to be bigger than # of books.
 	}
-	
+
 	&:after {
 		content:"";
 		display:block;
 		width:212px;
 		height:114px;
-		background:url('images/bookEnd-next.png');
+		background:url(asset-path('stackview/bookEnd-next.png'));
 		margin:-7px 0 0 0;
 	}
 }
 
 .stackview-placeholder {
 	width:250px;
-	background:url('images/placeholder.gif') no-repeat center center #ccd;
+	background:url(asset-path('stackview/placeholder.gif')) no-repeat center center #ccd;
 	border:1px solid #bbb;
 	border-radius:3px;
 	height:40px;
@@ -64,17 +64,17 @@
 	position:relative;
 	display:block;
 	-webkit-transform:translate3d(0,0,0);
-	
+
 	> a {
 		display:block;
 		text-decoration:none;
 		height:100%;
 		color:#fff;
 		white-space:nowrap;
-		background:url('images/gloss.png') repeat-x 0 47%;
-		
+		background:url(asset-path('stackview/gloss.png')) repeat-x 0 47%;
+
 		&:hover, &:focus {
-			background-image:url('images/highGloss.png');
+			background-image:url(asset-path('stackview/highGloss.png'));
 			text-decoration:none;
 		}
 
@@ -152,7 +152,7 @@
 		position:absolute;
 		bottom:-10px;
 		left:0;
-		background:url('images/ribbonTab.png') no-repeat 0 0;
+		background:url(asset-path('stackview/ribbonTab.png')) no-repeat 0 0;
 		width:10px;
 		height:10px;
 	}

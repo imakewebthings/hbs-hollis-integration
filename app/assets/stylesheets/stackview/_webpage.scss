@@ -34,7 +34,7 @@
 	text-overflow:ellipsis;
 
 	&:before {
-		content:url('images/icon-globe.png');
+		content:url(asset-path('stackview/icon-globe.png'));
 		vertical-align:middle;
 		position:relative;
 		top:1px;
