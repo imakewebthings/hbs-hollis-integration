@@ -21,5 +21,6 @@ module Hbshollis
     # config.i18n.default_locale = :de
 
     config.logger = Logger.new(STDOUT)
+    config.cache_store = :memory_store
   end
 end
