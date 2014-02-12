@@ -15,7 +15,8 @@
 require 'spec_helper'
 
 describe Contributor do
-  it { should respond_to :name }
+  it { should respond_to :surname }
+  it { should respond_to :given_name }
   it { should respond_to :title }
   it { should respond_to :primary_unit }
   it { should respond_to :name_slug }

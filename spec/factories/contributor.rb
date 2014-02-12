@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :contributor do
-    name 'Jane Test'
+    surname 'Test'
+    given_name 'Jane'
     role 'HBS Faculty'
     primary_unit 'Test Unit'
     sequence :person_id

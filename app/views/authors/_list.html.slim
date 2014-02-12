@@ -1,8 +1,10 @@
 .search-list
+  style#filter-css type='text/css'
   input type='text' placeholder='Filter'
   select
     option value='az' A-Z
     option value='za' Z-A
   ul
     - for author in @authors do
-      li= link_to author.name, author_path(author.name_slug), class: active_author_class(author, @active_author)
+      li data-name="#{author.surname}, #{author.given_name}"
+        = link_to "#{author.surname}, #{author.given_name}", author_path(author.name_slug), class: active_author_class(author, @active_author)

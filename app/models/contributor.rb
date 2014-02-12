@@ -18,13 +18,10 @@ class Contributor < ActiveRecord::Base
   end
 
   def self.authors!
-    self.uniq.select(:name, :name_slug).order(:name_slug)
+    self.uniq.select(:surname, :given_name, :name_slug).order(:surname)
   end
 
   def self.author_by_slug(name_slug)
-    puts name_slug
-    puts self.authors.class
-    puts self.authors.find_by_name_slug name_slug
     self.authors.find_by_name_slug name_slug
   end
 

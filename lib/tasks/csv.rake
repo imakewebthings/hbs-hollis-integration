@@ -15,23 +15,25 @@ namespace :csv do
     puts 'Generating new records from CSV'
     contributors = CSV.read(file, options).collect do |row|
       putc '.'
-      name = row.fields[row.headers.index(:title_title)].split.join(' ')
+      name_parts = row.fields[row.headers.index(:title_title)].split
+      name_slug = name_parts.join(' ').parameterize
+      surname = name_parts.pop
+      given_name = name_parts.join ' '
       primary_unit = row.fields[row.headers.index(:primary_unit)]
       if primary_unit == 'NULL'
         primary_unit = nil
       end
       primary_unit_slug = primary_unit ? primary_unit.parameterize : nil
       {
-        name: name,
+        surname: surname,
+        given_name: given_name,
         role: row.fields[row.headers.index(:person_role)],
         primary_unit: primary_unit,
         person_id: row.fields[row.headers.index(:person_id)],
         title: row.fields[row.headers.index(:title)],
-        name_slug: name.parameterize,
+        name_slug: name_slug,
         primary_unit_slug: primary_unit_slug
       }
-    end.select do |contributor|
-      contributor[:role] == 'HBS Faculty'
     end.uniq do |contributor|
       contributor[:person_id]
     end

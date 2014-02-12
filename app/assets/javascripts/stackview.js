@@ -1,19 +1,23 @@
 (function() {
   var urlBase = '/stackview';
+  var $container = $();
+  var ribbon, author, searchType;
 
   function init() {
-    var $container = $('.stackview-container');
-    var ribbon = $container.data('ribbon');
-    var author = $container.data('author');
-    var searchType = 'author';
+    $container.off();
+    $container = $('.stackview-container');
+    ribbon = $container.data('ribbon');
+    author = $container.data('author');
+    searchType = 'author';
 
     $container.stackView({
       url: urlBase,
       ribbon: ribbon,
       search_type: searchType,
-      query: author
+      query: author,
+      items_per_page: 20
     });
-  };
+  }
 
   $(document).on('ready page:load', init);
 })();

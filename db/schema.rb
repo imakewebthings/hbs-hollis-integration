@@ -17,7 +17,8 @@ ActiveRecord::Schema.define(version: 20140205223159) do
   enable_extension "plpgsql"
 
   create_table "contributors", force: true do |t|
-    t.string  "name"
+    t.string  "surname"
+    t.string  "given_name"
     t.string  "role"
     t.string  "primary_unit"
     t.integer "person_id"
@@ -30,5 +31,6 @@ ActiveRecord::Schema.define(version: 20140205223159) do
   add_index "contributors", ["person_id"], name: "index_contributors_on_person_id", unique: true, using: :btree
   add_index "contributors", ["primary_unit"], name: "index_contributors_on_primary_unit", using: :btree
   add_index "contributors", ["primary_unit_slug"], name: "index_contributors_on_primary_unit_slug", using: :btree
+  add_index "contributors", ["surname"], name: "index_contributors_on_surname", using: :btree
 
 end
