@@ -153,7 +153,8 @@
 		name: 'book',
 
 		match: function(item) {
-			return (item.format && item.format.match(/^book$/i)) || !item.format;
+      return true;
+			//return (item.format && item.format.match(/^book$/i)) || !item.format;
 		},
 
 		adapter: function(item, options) {

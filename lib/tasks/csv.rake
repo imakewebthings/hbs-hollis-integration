@@ -15,6 +15,9 @@ namespace :csv do
     puts 'Generating new records from CSV'
     contributors = CSV.read(file, options).collect do |row|
       putc '.'
+      if row.fields[row.headers.index(:contributor_type)] != 'HBS'
+        next
+      end
       name_parts = row.fields[row.headers.index(:title_title)].split
       name_slug = name_parts.join(' ').parameterize
       surname = name_parts.pop
@@ -34,7 +37,7 @@ namespace :csv do
         name_slug: name_slug,
         primary_unit_slug: primary_unit_slug
       }
-    end.uniq do |contributor|
+    end.compact.uniq do |contributor|
       contributor[:person_id]
     end
     puts "\nInserting generated records"
