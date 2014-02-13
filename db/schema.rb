@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140205223159) do
+ActiveRecord::Schema.define(version: 20140213215514) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,5 +32,14 @@ ActiveRecord::Schema.define(version: 20140205223159) do
   add_index "contributors", ["primary_unit"], name: "index_contributors_on_primary_unit", using: :btree
   add_index "contributors", ["primary_unit_slug"], name: "index_contributors_on_primary_unit_slug", using: :btree
   add_index "contributors", ["surname"], name: "index_contributors_on_surname", using: :btree
+
+  create_table "topics", force: true do |t|
+    t.string  "name"
+    t.string  "slug"
+    t.integer "record_count"
+  end
+
+  add_index "topics", ["record_count"], name: "index_topics_on_record_count", using: :btree
+  add_index "topics", ["slug"], name: "index_topics_on_slug", unique: true, using: :btree
 
 end
