@@ -39,7 +39,7 @@ class StackviewsController < ActionController::Base
     end
 
     def author_hash(params)
-      increment_page lc_read("creator:#{params[:query]}")
+      increment_page lc_read("creator_keyword:#{params[:query]}")
     end
 
     def empty_hash
