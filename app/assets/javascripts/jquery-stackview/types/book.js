@@ -162,16 +162,18 @@
 				heat: window.StackView.utils.get_heat(item.shelfrank || 0),
 				book_height: get_height(options, item),
 				book_thickness: get_thickness(options, item),
-				link: normalize_link(item),
+				link: '#' + item.id,
+        id: item.id,
 				title: item.title,
 				author: get_author(item),
-				year: item.pub_date
+				year: item.pub_date,
+        rawItem: item
 			};
 		},
 
 		template: '\
-			<li class="stack-item stack-book heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;">\
-				<a href="<%= link %>" target="_blank">\
+			<li class="stack-item stack-book heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>">\
+				<a href="<%= link %>">\
 					<span class="spine-text">\
 						<span class="spine-title"><%= title %></span>\
 						<span class="spine-author"><%= author %></span>\

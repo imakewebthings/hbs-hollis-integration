@@ -1,0 +1,32 @@
+.pubtitle {
+  font-size:1.4em;
+  line-height:1;
+  margin-bottom:8px;
+  color:#111;
+}
+
+.creators {
+  font-size:.7em;
+  color:#999;
+  margin-bottom:16px;
+}
+
+.description {
+  font-size:.8em;
+  color:#333;
+  margin-bottom:16px;
+}
+
+.view-item {
+  display:block;
+  text-align:center;
+  padding:6px;
+  color:#fff;
+  text-decoration:none;
+  background:shade($sky, 50%);
+  border-radius:10px;
+
+  &:hover, &:focus {
+    background:shade($skyPink, 30%);
+  }
+}

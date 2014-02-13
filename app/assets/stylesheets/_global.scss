@@ -66,6 +66,6 @@ a {
   }
 }
 
-.stack-items {
+.stackview * {
   @include box-sizing(content-box);
 }
