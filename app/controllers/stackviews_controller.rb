@@ -45,7 +45,7 @@ class StackviewsController < ActionController::Base
     end
 
     def topic_hash(params)
-      increment_page lc_read("lcsh_keyword:#{params[:query]}")
+      increment_page lc_read("keyword:#{params[:query]}")
     end
 
     def empty_hash
