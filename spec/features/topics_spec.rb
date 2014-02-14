@@ -10,8 +10,10 @@ describe '/topics' do
 end
 
 describe '/topics/:topic' do
+  let (:topic) { create :topic }
+
   before do
-    visit topic_path 'test'
+    visit topic_path topic.slug
   end
 
   specify { page.should have_selector 'header nav' }

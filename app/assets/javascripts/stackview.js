@@ -1,20 +1,20 @@
 (function() {
   var urlBase = '/stackview';
   var $container = $();
-  var ribbon, author, searchType;
+  var ribbon, query, searchType;
 
   function init() {
     $container.off();
     $container = $('.stackview-container');
     ribbon = $container.data('ribbon');
-    author = $container.data('author');
-    searchType = 'author';
+    query = $container.data('query');
+    searchType = $container.data('searchtype');
 
     $container.stackView({
       url: urlBase,
       ribbon: ribbon,
       search_type: searchType,
-      query: author,
+      query: query,
       items_per_page: 20
     });
   }

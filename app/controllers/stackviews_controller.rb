@@ -10,6 +10,8 @@ class StackviewsController < ActionController::Base
     case params[:search_type]
     when 'author'
       render json: author_hash(params)
+    when 'topic'
+      render json: topic_hash(params)
     else
       render json: empty_hash
     end
@@ -40,6 +42,10 @@ class StackviewsController < ActionController::Base
 
     def author_hash(params)
       increment_page lc_read("creator_keyword:#{params[:query]}")
+    end
+
+    def topic_hash(params)
+      increment_page lc_read("lcsh_keyword:#{params[:query]}")
     end
 
     def empty_hash
