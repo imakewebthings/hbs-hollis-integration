@@ -4,7 +4,7 @@ class TopicsController < ApplicationController
   end
 
   def show
-    @topics = Topic.all.order :record_count
+    @topics = Topic.all.order record_count: :desc
     @active_topic = Topic.find_by_slug params[:id]
   end
 end
