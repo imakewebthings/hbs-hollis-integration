@@ -29,17 +29,25 @@
     }
   }
 
+  function highlight() {
+    $('.stack-item').removeClass('active');
+    $('.stack-item[data-stackid="' + lastId + '"]').addClass('active');
+  }
+
   function checkHash() {
     var id = location.hash.split('#')[1];
     if (id && id != lastId) {
-      lastId = id;
       loadPublication(id);
     }
     else if (!id) {
       unloadPublication();
     }
+    lastId = id;
+    highlight();
   }
 
   $(window).on('hashchange.publication', checkHash);
-  $(document).on('stackview.init', '.stackview', checkHash);
+  $(document)
+    .on('stackview.init', '.stackview', checkHash)
+    .on('stackview.pageload', '.stackview', highlight);
 })();

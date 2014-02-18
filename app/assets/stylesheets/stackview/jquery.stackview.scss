@@ -169,3 +169,37 @@
 @import "webpage";
 
 @import "ministack";
+
+.stack-item {
+  -webkit-transition:-webkit-transform 300ms ease-in-out;
+  transition:transform 200ms ease-in-out;
+
+  &.active {
+    -ms-transform:translateX(20px);
+    -webkit-transform:translateX(20px);
+    transform:translateX(20px);
+
+    > a {
+      background:$skyPink;
+      border-color:shade($skyPink, 10%);
+    }
+
+    .stack-pages {
+      border-color:shade($skyPink, 10%);
+
+      &:after {
+        border-bottom-color:shade($skyPink, 20%);
+      }
+    }
+
+    .stack-cover {
+      background:$skyPink;
+      border-color:shade($skyPink, 10%);
+    }
+
+    .spine-text {
+      color:shade($skyPink, 70%);
+      text-shadow:1px 1px 1px rgba(255,255,255,.5);
+    }
+  }
+}
