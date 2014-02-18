@@ -7,5 +7,5 @@
   ul
     - for author in @authors do
       - name = "#{author.surname}, #{author.given_name}"
-      li data-name=name
+      li data-name=name.downcase
         = link_to name, author_path(author.name_slug), class: active_author_class(author, @active_author)

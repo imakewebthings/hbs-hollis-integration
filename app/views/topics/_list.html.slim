@@ -6,5 +6,5 @@
     option value='za' Z-A
   ul
     - for topic in @topics do
-      li data-name=topic.name
+      li data-name=topic.name.downcase
         = link_to topic.name, topic_path(topic.slug), class: active_topic_class(topic, @active_topic)

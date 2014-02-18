@@ -16,7 +16,7 @@
     $filterBox = $('.search-list input');
     $style = $('#filter-css');
     $filterBox.on('change.filter keyup.filter', function() {
-      var term = $(this).val();
+      var term = $(this).val().toLowerCase();
       var rule = term ? renderStyle(term) : '';
       $style.text(rule);
     });
