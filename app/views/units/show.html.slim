@@ -3,6 +3,5 @@ main.three-column
   section.column
     = render 'units/list'
   section.column
-    .stackview-container
-      p= "#{@id} StackView"
-  section.column
+    .stackview-container data-searchtype='author' data-query=unit_query(@authors) data-ribbon=@active_unit.primary_unit
+  section.column#publication

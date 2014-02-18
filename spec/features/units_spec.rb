@@ -10,8 +10,10 @@ describe '/units' do
 end
 
 describe '/units/:unit' do
+  let(:contributor) { create :contributor }
+
   before do
-    visit unit_path 'test'
+    visit unit_path contributor.primary_unit_slug
   end
 
   specify { page.should have_selector 'header nav' }

@@ -1,5 +1,4 @@
 .search-list
-  input type='text' placeholder='Filter'
   ul
     - for unit in @units
-      li= link_to unit.primary_unit, unit_path(unit.primary_unit_slug)
+      li= link_to unit.primary_unit, unit_path(unit.primary_unit_slug), class: active_unit_class(unit, @active_unit)
