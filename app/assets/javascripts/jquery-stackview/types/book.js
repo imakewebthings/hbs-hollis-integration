@@ -167,12 +167,13 @@
 				title: item.title,
 				author: get_author(item),
 				year: item.pub_date,
-        rawItem: item
+        rawItem: item,
+        hbs: item.source_record.collection === 'hbs_edu'
 			};
 		},
 
 		template: '\
-			<li class="stack-item stack-book heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>">\
+			<li class="stack-item stack-book heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>">\
 				<a href="<%= link %>">\
 					<span class="spine-text">\
 						<span class="spine-title"><%= title %></span>\
