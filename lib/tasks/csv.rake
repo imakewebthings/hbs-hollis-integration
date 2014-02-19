@@ -19,6 +19,11 @@ namespace :csv do
       if row.fields[row.headers.index(:contributor_type)] != 'HBS'
         next
       end
+      valid_publication_types = ['Book', 'Book Component', 'Working Paper']
+      publication_type = row.fields[row.headers.index(:publication_type)]
+      unless valid_publication_types.include? publication_type
+        next
+      end
       name_parts = row.fields[row.headers.index(:title_title)].split
       name_slug = name_parts.join(' ').parameterize
       surname = name_parts.pop
@@ -68,5 +73,18 @@ namespace :csv do
       puts "\nInserting generated records"
     end
     puts "#{topics.length} records inserted"
+  end
+
+  desc 'test'
+  task :test => :environment do
+    file = 'lib/tasks/csv/contributors.csv'
+    types = CSV.read(file, options).collect do |row|
+      putc '.'
+      if row.fields[row.headers.index(:contributor_type)] != 'HBS'
+        next
+      end
+      row.fields[row.headers.index(:publication_type)]
+    end.compact.uniq
+    puts types
   end
 end
