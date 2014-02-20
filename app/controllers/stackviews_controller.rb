@@ -2,7 +2,7 @@ class StackviewsController < ActionController::Base
   require 'open-uri'
   require 'json'
 
-  LC_ENDPOINT = 'http://hlslwebtest.law.harvard.edu/v1/api/item/'
+  LC_ENDPOINT = ENV['LC_ENDPOINT']
   DEFAULT_PARAMS =  '?filter=collection:hollis_catalog,hbs_edu'
 
   def show

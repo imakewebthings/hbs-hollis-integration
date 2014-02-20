@@ -1,4 +1,6 @@
 require 'csv' 
+require 'json'
+require 'open-uri'
 
 namespace :csv do
   options = {
@@ -7,6 +9,7 @@ namespace :csv do
     header_converters: :symbol,
     converters: :integer
   }
+  LC_ENDPOINT = 'http://hlslwebtest.law.harvard.edu/v1/api/item/?filter=collection:hollis_catalog,hbs_edu&limit=250'
 
   desc 'Create database records from contributor CSV file'
   task :contributors => :environment do
@@ -75,16 +78,29 @@ namespace :csv do
     puts "#{topics.length} records inserted"
   end
 
-  desc 'test'
-  task :test => :environment do
-    file = 'lib/tasks/csv/contributors.csv'
-    types = CSV.read(file, options).collect do |row|
-      putc '.'
-      if row.fields[row.headers.index(:contributor_type)] != 'HBS'
-        next
+  desc 'Generate LCSH matches for Topics'
+  task :lcsh => :environment do
+    topics = Topic.pluck(:name, :slug)
+    topics.each do |topic|
+      query = CGI::escape topic.first
+      slug = topic.last
+      puts "STARTING TOPIC: #{query}"
+      url = "#{LC_ENDPOINT}&filter=keyword:#{query}&filter=format:Book"
+      docs = []
+      2.times do |page|
+        puts "...page #{page}"
+        response = JSON.parse open("#{url}&start=#{page*250}").read
+        docs.concat response['docs']
       end
-      row.fields[row.headers.index(:publication_type)]
-    end.compact.uniq
-    puts types
+      lcsh_freq = docs.reduce(Hash.new(0)) do |memo, item|
+        if item['lcsh']
+          item['lcsh'].each{|subject| memo[subject] += 1 } 
+        end
+        memo
+      end.sort_by {|k, v| v }
+      most_frequent = lcsh_freq.last.first
+      puts "#{query} -> #{most_frequent}"
+      Topic.find_by_slug(slug).update(lcsh: most_frequent)
+    end
   end
 end
