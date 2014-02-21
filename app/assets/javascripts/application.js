@@ -27,3 +27,4 @@
 //= require stackview
 //= require filter
 //= require publication
+//= require list
