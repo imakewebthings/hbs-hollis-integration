@@ -38,7 +38,7 @@
 			max_height_percentage: 100,
 			max_height: 39,
 			max_pages: 540,
-			min_height_percentage: 59,
+			min_height_percentage: 77,
 			min_height: 20,
 			min_pages: 200,
 			page_multiple: 0.20
@@ -153,8 +153,7 @@
 		name: 'book',
 
 		match: function(item) {
-      return true;
-			//return (item.format && item.format.match(/^book$/i)) || !item.format;
+			return (item.format && item.format.match(/^book$/i)) || !item.format;
 		},
 
 		adapter: function(item, options) {
@@ -185,4 +184,76 @@
 				</a>\
 			</li>'
 	});
+
+  /* Book Component Type */
+  window.StackView.register_type({
+    name: 'book_component',
+    match: function(item) {
+      return (item.format && item.format.match(/^book component$/i));
+    },
+
+		adapter: function(item, options) {
+			return {
+				heat: window.StackView.utils.get_heat(item.shelfrank || 0),
+				book_height: get_height(options, item),
+				book_thickness: get_thickness(options, item),
+				link: '#' + item.id,
+        id: item.id,
+				title: item.title,
+				author: get_author(item),
+				year: item.pub_date,
+        rawItem: item,
+        hbs: item.source_record.collection === 'hbs_edu'
+      };
+    },
+
+    template: '\
+			<li class="stack-item stack-book book-component heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>">\
+				<a href="<%= link %>">\
+					<span class="spine-text">\
+						<span class="spine-title"><%= title %></span>\
+						<span class="spine-author"><%= author %></span>\
+					</span>\
+					<span class="spine-year"><%= year %></span>\
+					<span class="stack-pages" />\
+					<span class="stack-cover" />\
+				</a>\
+			</li>'
+  });
+
+  /* Book Component Type */
+  window.StackView.register_type({
+    name: 'unidentified',
+    match: function(item) {
+      return true;
+    },
+
+		adapter: function(item, options) {
+			return {
+				heat: window.StackView.utils.get_heat(item.shelfrank || 0),
+				book_height: get_height(options, item),
+				book_thickness: get_thickness(options, item),
+				link: '#' + item.id,
+        id: item.id,
+				title: item.title,
+				author: get_author(item),
+				year: item.pub_date,
+        rawItem: item,
+        hbs: item.source_record.collection === 'hbs_edu'
+      };
+    },
+
+    template: '\
+			<li class="stack-item stack-book unidentified heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>">\
+				<a href="<%= link %>">\
+					<span class="spine-text">\
+						<span class="spine-title"><%= title %></span>\
+						<span class="spine-author"><%= author %></span>\
+					</span>\
+					<span class="spine-year"><%= year %></span>\
+					<span class="stack-pages" />\
+					<span class="stack-cover" />\
+				</a>\
+			</li>'
+  });
 })(jQuery, window);

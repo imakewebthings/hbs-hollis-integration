@@ -1,5 +1,6 @@
 script#publication-template type='text/x-template'
   h2.pubtitle <%= title %> (<%= pub_date %>)
+  h3.format <%= format %>
   ul.creators
     | <% jQuery.each(creator, function(i, c) { %>
     li <%= c %>

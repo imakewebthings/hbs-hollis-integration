@@ -13,7 +13,7 @@
 
 	/*
 	   #normalize_link(object) - Private
-	
+
 	   Takes an item and returns the item's link, taking into account
 	   workarounds that may come from inconsistent data structure.
 	*/
@@ -37,13 +37,15 @@
 				height: '65%',
 				title: item.title,
 				year: item.pub_date,
-				link: normalize_link(item)
+				link: '#' + item.id,
+        id: item.id,
+        hbs: item.source_record.collection === 'hbs_edu'
 			};
 		},
 
 		template: '\
-			<li class="stack-item stack-videofilm heat<%= heat %>" style="width:<%= height %>;">\
-				<a href="<%= link %>" target="_blank">\
+			<li class="stack-item stack-videofilm heat<%= heat %>" style="width:<%= height %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>">\
+				<a href="<%= link %>">\
 					<span class="spine-text">\
 						<span class="spine-title"><%= title %></span>\
 					</span>\
