@@ -80,7 +80,7 @@ namespace :csv do
 
   desc 'Generate LCSH matches for Topics'
   task :lcsh => :environment do
-    topics = Topic.pluck(:name, :slug)
+    topics = Topic.where(lcsh: nil).pluck(:name, :slug)
     topics.each do |topic|
       query = CGI::escape topic.first
       slug = topic.last
@@ -98,7 +98,10 @@ namespace :csv do
         end
         memo
       end.sort_by {|k, v| v }
-      most_frequent = lcsh_freq.last.first
+      most_frequent = lcsh_freq.last ? lcsh_freq.last.first : nil;
+      if most_frequent && most_frequent['HKS Faculty']
+        most_frequent = lcsh_freq[-2] ? lcsh_freq[-2].first : nil;
+      end
       puts "#{query} -> #{most_frequent}"
       Topic.find_by_slug(slug).update(lcsh: most_frequent)
     end
