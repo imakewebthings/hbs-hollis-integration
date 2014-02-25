@@ -23,6 +23,7 @@
 //= require jquery-stackview/jquery.stackview.stackcache
 //= require jquery-stackview/jquery.stackview.templates.js
 //= require jquery-stackview/types/videofilm.js
+//= require jquery-stackview/types/serial.js
 //= require jquery-stackview/types/book.js
 
 //= require stackview
