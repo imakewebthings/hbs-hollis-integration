@@ -22,6 +22,7 @@ class StackviewsController < ActionController::Base
       params = {
         limit: @params[:limit],
         start: @params[:start],
+        sort: @params[:sort],
         filter: filter
       }
       [LC_ENDPOINT + DEFAULT_PARAMS, params.to_query].join '&'
