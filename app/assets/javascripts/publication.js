@@ -5,9 +5,29 @@
     $('#publication').empty();
   }
 
+  function normalizeData(data) {
+    var normalized = $.extend(true, {}, data);
+    normalized.description = null;
+    normalized.containing_book = null;
+    normalized.url = data.url && data.url.length ? data.url[0] : null;
+    normalized.pub_date = data.pub_date ? data.pub_date : null;
+    if (data.note) {
+      $.each(data.note, function(i, note) {
+        var cbMatch = note.match(/containing_book:(.*)/);
+        if (cbMatch) {
+          normalized.containing_book = cbMatch[1];
+        }
+        if (!cbMatch && i === data.note.length - 1) {
+          normalized.description = note;
+        }
+      });
+    }
+    return normalized;
+  }
+
   function renderPublication(data) {
     var template = $('#publication-template').html();
-    $('#publication').html(window.tmpl(template, data));
+    $('#publication').html(window.tmpl(template, normalizeData(data)));
   }
 
   function requestItem(id) {

@@ -1,16 +1,21 @@
 script#publication-template type='text/x-template'
   .publication-container
-    h2.pubtitle <%= title %> (<%= pub_date %>)
+    h2.pubtitle <%= title %> <%= pub_date ? '('+pub_date+')' : '' %>
     h3.format <%= format %>
+      
+    | <% if (containing_book) { %>
+    p.containing-book Appears in <i><%= containing_book %></i>
+    | <% } %>
+
     ul.creators
       | <% jQuery.each(creator, function(i, c) { %>
       li <%= c %>
       | <% }); %>
 
-    | <% if (typeof note !== 'undefined' && note.length > 1) { %>
-    p.description <%= note[note.length - 1] %>
+    | <% if (description) { %>
+    p.description <%= description %>
     | <% } %>
 
-    | <% if (typeof url !== 'undefined' && url.length) { %>
+    | <% if (url) { %>
     | <a class='view-item' href='<%= url[0] %>' target='_blank'>View</a>
     | <% } %>
