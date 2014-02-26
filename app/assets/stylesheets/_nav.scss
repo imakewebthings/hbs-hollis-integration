@@ -57,5 +57,9 @@
       border-left-color:shade($skyPink, 40%);
       border-right-color:shade($skyPink, 20%);
     }
+
+    &.active {
+      cursor:default;
+    }
   }
 }

@@ -245,3 +245,7 @@
 .unidentified > a {
   background:#ddd;
 }
+
+.stack-items:before, .stack-items:after {
+  max-width:100%;
+}

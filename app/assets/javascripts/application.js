@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
 //= require turbolinks
 
 //= require jquery-stackview/microtemplating
@@ -29,3 +28,4 @@
 //= require filter
 //= require publication
 //= require list
+//= require transitions
