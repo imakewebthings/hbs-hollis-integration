@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require turbolinks
+//= require jquery.placeholder
 
 //= require jquery-stackview/microtemplating
 //= require jquery-stackview/jquery.easing.1.3

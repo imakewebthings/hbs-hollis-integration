@@ -40,6 +40,18 @@ i {
   font-style:italic;
 }
 
+.placeholder {
+  color:#aaa;
+  width:100% !important;
+  cursor:text !important;
+}
+::-webkit-input-placeholder {
+  color:#aaa;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color:#aaa;
+}
+
 .page-wrapper {
   width:100%;
   min-height:100%;

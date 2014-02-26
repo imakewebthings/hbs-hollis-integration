@@ -20,6 +20,7 @@
       var rule = term ? renderStyle(term) : '';
       $style.text(rule);
     });
+    $filterBox.placeholder({ force:true });
   }
 
   $(document).on('ready page:load', init);
