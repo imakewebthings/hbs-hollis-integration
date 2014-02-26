@@ -4,9 +4,14 @@ header {
   position:relative;
   padding:10px 10px 0 10px;
   border-bottom:10px solid tint($sky, 70%);
+  @include breakpoint(narrow) {
+    padding-left:0;
+    padding-right:0;
+  }
 
   h1 {
     text-shadow:1px 1px 1px rgba(255,255,255,.4);
+    @include breakpoint(narrow) { text-align:center; }
   }
 
   a {

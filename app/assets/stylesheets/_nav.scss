@@ -6,6 +6,10 @@
     position:absolute;
     right:10px;
     top:20px;
+    @include breakpoint(narrow) {
+      position:static;
+      margin-top:0;
+    }
   }
 
   h3 {

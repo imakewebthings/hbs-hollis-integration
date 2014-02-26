@@ -1,0 +1,5 @@
+@mixin breakpoint($point) {
+  @if $point == narrow {
+    @media all and (max-width: 640px) { @content; }
+  }
+}

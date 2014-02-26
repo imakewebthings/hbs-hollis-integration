@@ -19,7 +19,6 @@
 //= require jquery-stackview/jquery.stackview.base
 //= require jquery-stackview/jquery.stackview.infinite
 //= require jquery-stackview/jquery.stackview.navigation
-//= require jquery-stackview/jquery.stackview.ministack
 //= require jquery-stackview/jquery.stackview.stackcache
 //= require jquery-stackview/jquery.stackview.templates.js
 //= require jquery-stackview/types/videofilm.js
