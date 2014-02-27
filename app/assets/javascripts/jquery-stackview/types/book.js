@@ -38,7 +38,7 @@
 			max_height_percentage: 100,
 			max_height: 39,
 			max_pages: 540,
-			min_height_percentage: 77,
+			min_height_percentage: 60,
 			min_height: 20,
 			min_pages: 200,
 			page_multiple: 0.20
@@ -78,12 +78,12 @@
 	   the percentage range specified in the stack options.
 	*/
 	var get_height = function(options, book) {
-		var height = parseInt(book.measurement_height_numeric, 10),
+		var height = parseInt(book.height_numeric, 10),
 		    min = options.book.min_height,
 		    max = options.book.max_height;
 
 		if (isNaN(height)) {
-			height = min;
+			height = (max + min) / 2;
 		}
 		height = Math.min(Math.max(height, min), max);
 		height = translate(
@@ -104,7 +104,7 @@
 	   the minimum pages, maximum pages, and pages multiple.
 	*/
 	var get_thickness = function(options, book) {
-		var thickness = parseInt(book.measurement_page_numeric, 10),
+		var thickness = parseInt(book.pages_numeric, 10),
 		    min = options.book.min_pages,
 		    max = options.book.max_pages,
 		    multiple = options.book.page_multiple;
