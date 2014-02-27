@@ -3,5 +3,5 @@ main.three-column
   section.column
     = render 'authors/list'
   section.column
-    .stackview-container data-searchtype='author' data-query='#{@active_author.surname}, #{@active_author.given_name}' data-ribbon='#{@active_author.given_name} #{@active_author.surname}' data-sort='pub_date_numeric desc'
+    .stackview-container data-searchtype='author' data-query='#{transliterate(@active_author.surname)}, #{transliterate(@active_author.given_name)}' data-ribbon='#{@active_author.given_name} #{@active_author.surname}' data-sort='pub_date_numeric desc'
   section.column#publication
