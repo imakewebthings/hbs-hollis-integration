@@ -13,6 +13,7 @@ namespace :csv do
 
   desc 'Create database records from contributor CSV file'
   task :contributors => :environment do
+    Rails.logger.level = Logger::ERROR
     file = 'lib/tasks/csv/contributors.csv'
     puts 'Destroying existing contributor records'
     Contributor.destroy_all
@@ -60,6 +61,7 @@ namespace :csv do
 
   desc 'Create database records from topic CSV file'
   task :topics => :environment do
+    Rails.logger.level = Logger::ERROR
     puts 'Destroying existing topic records'
     Topic.destroy_all
     puts 'Generating new records from CSV'
@@ -82,6 +84,7 @@ namespace :csv do
 
   desc 'Generate LCSH matches for Topics'
   task :lcsh => :environment do
+    Rails.logger.level = Logger::ERROR
     topics = Topic.where(lcsh: nil).pluck(:name, :slug)
     topics.each do |topic|
       query = CGI::escape topic.first
@@ -97,7 +100,7 @@ namespace :csv do
       lcsh_freq = docs.reduce(Hash.new(0)) do |memo, item|
         if item['lcsh']
           item['lcsh'].each do |subject|
-            next if subject['HKS Faculty'] 
+            next if subject['HKS Faculty'] || subject['CD-ROMs'] 
             memo[subject] += 1
           end
         end
@@ -115,16 +118,16 @@ namespace :csv do
       end
       unless found
         most_common = lcsh_freq.max_by do |lcsh|
-          (lcsh.first.downcase.gsub(' and ', ' ').split(' ') & topic.first.downcase.gsub(' and ', ' ').split(' ')).length
+          common_word_count = (lcsh.first.downcase.gsub(' and ', ' ').gsub('.', '').split(' ') & topic.first.downcase.gsub(' and ', ' ').split(' ')).length
+          result_count = lcsh.last
+          [common_word_count, result_count]
         end
-        count = (most_common.first.downcase.gsub(' and ', ' ').split(' ') & topic.first.downcase.gsub(' and ', ' ').split(' ')).length
-        if count > 0
-          best_match = most_common.first
-          puts 'COMMON'
-        end
+        best_match = most_common.first
+        puts 'COMMON or MOST POPULAR'
       end
-      puts "#{query} -> #{best_match}"
+      puts "#{topic.first} -> #{best_match}"
       Topic.find_by_slug(slug).update(lcsh: best_match)
+      puts ''
     end
   end
 end
