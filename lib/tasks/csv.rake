@@ -96,16 +96,35 @@ namespace :csv do
       end
       lcsh_freq = docs.reduce(Hash.new(0)) do |memo, item|
         if item['lcsh']
-          item['lcsh'].each{|subject| memo[subject] += 1 } 
+          item['lcsh'].each do |subject|
+            next if subject['HKS Faculty'] 
+            memo[subject] += 1
+          end
         end
         memo
-      end.sort_by {|k, v| v }
-      most_frequent = lcsh_freq.last ? lcsh_freq.last.first : nil;
-      if most_frequent && most_frequent['HKS Faculty']
-        most_frequent = lcsh_freq[-2] ? lcsh_freq[-2].first : nil;
+      end.sort_by{|k, v| -v }.slice(0, 10)
+      next unless lcsh_freq && lcsh_freq.length > 0
+      best_match = lcsh_freq.first.first
+      found = false
+      lcsh_freq.each do |lcsh|
+        if lcsh.first.gsub('.', '') == topic.first
+          best_match = lcsh.first
+          found = true
+          puts 'EXACT'
+        end
       end
-      puts "#{query} -> #{most_frequent}"
-      Topic.find_by_slug(slug).update(lcsh: most_frequent)
+      unless found
+        most_common = lcsh_freq.max_by do |lcsh|
+          (lcsh.first.downcase.gsub(' and ', ' ').split(' ') & topic.first.downcase.gsub(' and ', ' ').split(' ')).length
+        end
+        count = (most_common.first.downcase.gsub(' and ', ' ').split(' ') & topic.first.downcase.gsub(' and ', ' ').split(' ')).length
+        if count > 0
+          best_match = most_common.first
+          puts 'COMMON'
+        end
+      end
+      puts "#{query} -> #{best_match}"
+      Topic.find_by_slug(slug).update(lcsh: best_match)
     end
   end
 end
