@@ -18,8 +18,10 @@ namespace :csv do
     Contributor.destroy_all
     puts 'Generating new records from CSV'
     contributors = CSV.read(file, options).collect do |row|
+      is_hbs = row.fields[row.headers.index(:contributor_type)] == 'HBS'
+      is_editor = row.fields[row.headers.index(:contributor_role)] == 'editor'
       putc '.'
-      if row.fields[row.headers.index(:contributor_type)] != 'HBS'
+      if !is_hbs || is_editor
         next
       end
       valid_publication_types = ['Book', 'Book Component', 'Working Paper']
