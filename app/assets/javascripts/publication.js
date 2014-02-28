@@ -11,6 +11,7 @@
     normalized.containing_book = null;
     normalized.url = data.url && data.url.length ? data.url[0] : null;
     normalized.pub_date = data.pub_date ? data.pub_date : null;
+    normalized.creator = data.creator ? data.creator : [];
     if (data.note) {
       $.each(data.note, function(i, note) {
         var cbMatch = note.match(/containing_book:(.*)/);

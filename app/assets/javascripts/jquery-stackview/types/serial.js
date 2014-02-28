@@ -22,13 +22,13 @@
 			return {
 				heat: window.StackView.utils.get_heat(item.shelfrank),
 				title: item.title,
-				link: item.link
+				link: '#' + item.id
 			};
 		},
 
 		template: '\
 			<li class="stack-item stack-serial heat<%= heat %>">\
-				<a href="<%= link %>" target="_blank">\
+				<a href="<%= link %>">\
 					<span class="spine-text">\
 						<span class="spine-title"><%= title %></span>\
 					</span>\

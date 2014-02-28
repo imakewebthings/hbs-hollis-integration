@@ -105,12 +105,12 @@ namespace :csv do
           end
         end
         memo
-      end.sort_by{|k, v| -v }.slice(0, 10)
+      end.sort_by{|k, v| -v }.slice(0, 20)
       next unless lcsh_freq && lcsh_freq.length > 0
       best_match = lcsh_freq.first.first
       found = false
       lcsh_freq.each do |lcsh|
-        if lcsh.first.gsub('.', '') == topic.first
+        if lcsh.first.downcase.gsub(/\W/, ' ').strip == topic.first.downcase
           best_match = lcsh.first
           found = true
           puts 'EXACT'
@@ -118,7 +118,7 @@ namespace :csv do
       end
       unless found
         most_common = lcsh_freq.max_by do |lcsh|
-          common_word_count = (lcsh.first.downcase.gsub(' and ', ' ').gsub('.', '').split(' ') & topic.first.downcase.gsub(' and ', ' ').split(' ')).length
+          common_word_count = (lcsh.first.downcase.gsub(/\b(and|or|of)\b/, ' ').gsub(/\W/, ' ').split(' ') & topic.first.downcase.gsub(/\b(and|or|of)\b/, ' ').split(' ')).length
           result_count = lcsh.last
           [common_word_count, result_count]
         end

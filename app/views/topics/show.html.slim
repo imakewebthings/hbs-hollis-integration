@@ -3,5 +3,12 @@ main.three-column
   section.column
     = render 'topics/list'
   section.column
-    .stackview-container data-searchtype='topic' data-query=@active_topic.name data-ribbon=@active_topic.name data-sort='shelfrank desc'
+    .stackview-controls
+      label
+        input type='radio' name='collection' value='hbs_edu' checked='checked'
+        | HBS Only
+      label title="Using Library of Congress Subject Heading: #{@active_topic.lcsh}"
+        input type='radio' name='collection' value='hollis_catalog,hbs_edu'
+        | All HOLLIS
+    .stackview-container data-searchtype='topic' data-query=@active_topic.name data-ribbon=@active_topic.name data-sort='shelfrank desc' data-collection='hbs_edu'
   section.column#publication

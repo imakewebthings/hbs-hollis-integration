@@ -221,7 +221,7 @@
 			</li>'
   });
 
-  /* Book Component Type */
+  /* Unidentified Type */
   window.StackView.register_type({
     name: 'unidentified',
     match: function(item) {

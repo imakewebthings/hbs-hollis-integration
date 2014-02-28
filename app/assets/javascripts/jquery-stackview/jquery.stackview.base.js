@@ -97,7 +97,8 @@
 			limit: stack.options.items_per_page,
 			search_type: stack.options.search_type,
 			query: stack.options.query,
-      sort: stack.options.sort
+      sort: stack.options.sort,
+      collection: stack.options.collection
 		};
 
 		if (params.search_type === 'loc_sort_order') {

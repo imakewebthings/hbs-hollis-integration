@@ -3,21 +3,24 @@ class StackviewsController < ActionController::Base
   require 'json'
 
   LC_ENDPOINT = ENV['LC_ENDPOINT']
-  DEFAULT_PARAMS =  '?filter=collection:hollis_catalog,hbs_edu'
 
   def show
     @params = params
     case params[:search_type]
     when 'author'
-      render json: author_hash(params)
+      render json: author_hash
     when 'topic'
-      render json: topic_hash(params)
+      render json: topic_hash
     else
       render json: empty_hash
     end
   end
 
   private
+    def collection_filter
+      "&filter=collection:#{@params[:collection]}"
+    end
+
     def build_url(filter)
       params = {
         limit: @params[:limit],
@@ -25,7 +28,7 @@ class StackviewsController < ActionController::Base
         sort: @params[:sort],
         filter: filter
       }
-      [LC_ENDPOINT + DEFAULT_PARAMS, params.to_query].join '&'
+      [LC_ENDPOINT, params.to_query].join('?') + collection_filter
     end
 
     def lc_read(filter)
@@ -41,12 +44,17 @@ class StackviewsController < ActionController::Base
       json
     end
 
-    def author_hash(params)
-      increment_page lc_read("creator_keyword:#{params[:query]}")
+    def author_hash
+      increment_page lc_read("creator_keyword:#{@params[:query]}")
     end
 
-    def topic_hash(params)
-      increment_page lc_read("keyword:#{params[:query]}")
+    def topic_hash
+      field = @params[:collection] == 'hbs_edu' ? 'note_keyword' : 'lcsh'
+      value = @params[:query]
+      if field == 'lcsh'
+        value = Topic.find_by_name(value).lcsh
+      end
+      increment_page lc_read("#{field}:#{value}")
     end
 
     def empty_hash

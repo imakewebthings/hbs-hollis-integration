@@ -30,3 +30,4 @@
 //= require publication
 //= require list
 //= require transitions
+//= require controls
