@@ -2,7 +2,7 @@ class StackviewsController < ActionController::Base
   require 'open-uri'
   require 'json'
 
-  LC_ENDPOINT = ENV['LC_ENDPOINT']
+  LC_ENDPOINT = ENV['LC_ENDPOINT'] + '?filter=language:English'
 
   def show
     @params = params
@@ -18,7 +18,7 @@ class StackviewsController < ActionController::Base
 
   private
     def collection_filter
-      "&filter=collection:#{@params[:collection]}"
+      "filter=collection:#{@params[:collection]}"
     end
 
     def build_url(filter)
@@ -28,7 +28,7 @@ class StackviewsController < ActionController::Base
         sort: @params[:sort],
         filter: filter
       }
-      [LC_ENDPOINT, params.to_query].join('?') + collection_filter
+      [LC_ENDPOINT, params.to_query, collection_filter].join '&'
     end
 
     def lc_read(filter)
