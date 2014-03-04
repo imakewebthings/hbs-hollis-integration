@@ -25,7 +25,7 @@ namespace :csv do
       if !is_hbs || is_editor
         next
       end
-      valid_publication_types = ['Book', 'Book Component', 'Working Paper']
+      valid_publication_types = ['Book', 'Book Component']
       publication_type = row.fields[row.headers.index(:publication_type)]
       unless valid_publication_types.include? publication_type
         next
@@ -38,6 +38,8 @@ namespace :csv do
       if primary_unit == 'NULL'
         primary_unit = nil
       end
+      title = row.fields[row.headers.index(:title)]
+      title = nil if title == 'NULL'
       primary_unit_slug = primary_unit ? primary_unit.parameterize : nil
       {
         surname: surname,
@@ -45,7 +47,7 @@ namespace :csv do
         role: row.fields[row.headers.index(:person_role)],
         primary_unit: primary_unit,
         person_id: row.fields[row.headers.index(:person_id)],
-        title: row.fields[row.headers.index(:title)],
+        title: title,
         name_slug: name_slug,
         primary_unit_slug: primary_unit_slug
       }
