@@ -1,6 +1,4 @@
 require 'csv' 
-require 'json'
-require 'open-uri'
 
 namespace :csv do
   options = {
@@ -9,7 +7,6 @@ namespace :csv do
     header_converters: :symbol,
     converters: :integer
   }
-  LC_ENDPOINT = 'http://hlslwebtest.law.harvard.edu/v1/api/item/?filter=collection:hollis_catalog,hbs_edu&limit=250'
 
   desc 'Create database records from contributor CSV file'
   task :contributors => :environment do
@@ -82,54 +79,5 @@ namespace :csv do
       puts "\nInserting generated records"
     end
     puts "#{topics.length} records inserted"
-  end
-
-  desc 'Generate LCSH matches for Topics'
-  task :lcsh => :environment do
-    Rails.logger.level = Logger::ERROR
-    topics = Topic.where(lcsh: nil).pluck(:name, :slug)
-    topics.each do |topic|
-      query = CGI::escape topic.first
-      slug = topic.last
-      puts "STARTING TOPIC: #{query}"
-      url = "#{LC_ENDPOINT}&filter=keyword:#{query}&filter=format:Book"
-      docs = []
-      2.times do |page|
-        puts "...page #{page}"
-        response = JSON.parse open("#{url}&start=#{page*250}").read
-        docs.concat response['docs']
-      end
-      lcsh_freq = docs.reduce(Hash.new(0)) do |memo, item|
-        if item['lcsh']
-          item['lcsh'].each do |subject|
-            next if subject['HKS Faculty'] || subject['CD-ROMs'] 
-            memo[subject] += 1
-          end
-        end
-        memo
-      end.sort_by{|k, v| -v }.slice(0, 20)
-      next unless lcsh_freq && lcsh_freq.length > 0
-      best_match = lcsh_freq.first.first
-      found = false
-      lcsh_freq.each do |lcsh|
-        if lcsh.first.downcase.gsub(/\W/, ' ').strip == topic.first.downcase
-          best_match = lcsh.first
-          found = true
-          puts 'EXACT'
-        end
-      end
-      unless found
-        most_common = lcsh_freq.max_by do |lcsh|
-          common_word_count = (lcsh.first.downcase.gsub(/\b(and|or|of)\b/, ' ').gsub(/\W/, ' ').split(' ') & topic.first.downcase.gsub(/\b(and|or|of)\b/, ' ').split(' ')).length
-          result_count = lcsh.last
-          [common_word_count, result_count]
-        end
-        best_match = most_common.first
-        puts 'COMMON or MOST POPULAR'
-      end
-      puts "#{topic.first} -> #{best_match}"
-      Topic.find_by_slug(slug).update(lcsh: best_match)
-      puts ''
-    end
   end
 end
