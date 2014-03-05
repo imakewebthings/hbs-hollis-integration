@@ -31,3 +31,4 @@
 //= require list
 //= require transitions
 //= require controls
+//= require dedupe

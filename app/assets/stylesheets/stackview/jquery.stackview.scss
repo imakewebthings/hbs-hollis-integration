@@ -249,3 +249,7 @@
 .stack-items:before, .stack-items:after {
   max-width:100%;
 }
+
+.stack-item.duplicate {
+  display:none;
+}
