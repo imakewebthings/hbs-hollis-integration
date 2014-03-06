@@ -58,6 +58,56 @@ namespace :lcsh do
   end
 
   desc 'Generate best-guess LCSH matches for Topics'
+  task :substring => :environment do
+    Rails.logger.level = Logger::ERROR
+    topics = Topic.where(lcsh: nil).pluck(:name, :slug)
+    hit_count = 0
+    miss_count = 0
+    topics.each do |topic|
+      query = CGI::escape topic.first
+      slug = topic.last
+      docs = []
+      url = [
+        LC_ENDPOINT,
+        "filter=subject_keyword:#{query}",
+        "filter=format:Book",
+        "limit=250"
+      ].join('&')
+      2.times do |page|
+        response = JSON.parse open("#{url}&start=#{page*250}").read
+        docs.concat response['docs']
+      end
+      lcsh_freq = docs.reduce(Hash.new(0)) do |memo, item|
+        if item['lcsh']
+          item['lcsh'].each do |subject|
+            next if subject['HKS Faculty'] || subject['CD-ROMs']
+            memo[subject] += 1
+          end
+        end
+        memo
+      end.sort_by{|k, v| -v }.slice(0, 50)
+      if lcsh_freq.empty?
+        miss_count += 1
+        next
+      end
+      most_common = lcsh_freq.select do |lcsh|
+        lcsh_name = lcsh.first.downcase.gsub('.', '')
+        next if lcsh_name.blank?
+        topic.first.downcase.include? lcsh_name
+      end
+      if most_common.empty?
+        miss_count += 1
+      else
+        best_match = most_common.first.first
+        puts "#{topic.first} -> #{best_match}"
+        hit_count += 1
+        Topic.find_by_slug(slug).update(lcsh: best_match)
+      end
+    end
+    puts "\nSUBSTRING MATCHES: #{hit_count} hits. #{miss_count} left unmatched."
+  end
+
+  desc 'Generate best-guess LCSH matches for Topics'
   task :match => :environment do
     Rails.logger.level = Logger::ERROR
     topics = Topic.where(lcsh: nil).pluck(:name, :slug)

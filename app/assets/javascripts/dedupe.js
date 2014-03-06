@@ -1,4 +1,5 @@
 (function() {
+  var $document = $(document);
   var $previous, $stack;
 
   function init() {
@@ -30,7 +31,6 @@
     });
   }
 
-  $(document)
-  .on('stackview.init', init)
-  .on('stackview.pageload', dedupe);
+  $document.on('stackview.init', init);
+  $document.on('stackview.pageload', dedupe);
 })();
