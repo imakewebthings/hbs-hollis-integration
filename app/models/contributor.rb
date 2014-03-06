@@ -13,6 +13,9 @@
 #
 
 class Contributor < ActiveRecord::Base
+  has_many :coauthorships, foreign_key: 'author_id', primary_key: 'person_id'
+  has_many :coauthors, through: :coauthorships
+
   def self.authors
     Rails.cache.fetch(:authors) { self.authors! }
   end

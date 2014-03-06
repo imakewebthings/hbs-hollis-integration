@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140220011143) do
+ActiveRecord::Schema.define(version: 20140306220907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "coauthorships", force: true do |t|
+    t.integer "author_id",   null: false
+    t.integer "coauthor_id", null: false
+  end
+
+  add_index "coauthorships", ["author_id", "coauthor_id"], name: "index_coauthorships_on_author_id_and_coauthor_id", unique: true, using: :btree
+  add_index "coauthorships", ["author_id"], name: "index_coauthorships_on_author_id", using: :btree
 
   create_table "contributors", force: true do |t|
     t.string  "surname"

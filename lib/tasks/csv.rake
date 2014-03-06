@@ -15,7 +15,8 @@ namespace :csv do
     puts 'Destroying existing contributor records'
     Contributor.destroy_all
     puts 'Generating new records from CSV'
-    contributors = CSV.read(file, options).collect do |row|
+    contibutors_csv = CSV.read(file, options)
+    contributors = contributors_csv.collect do |row|
       is_hbs = row.fields[row.headers.index(:contributor_type)] == 'HBS'
       is_editor = row.fields[row.headers.index(:contributor_role)] == 'editor'
       putc '.'
@@ -56,6 +57,43 @@ namespace :csv do
       contributors.each {|c| Contributor.create c }
     end
     puts "#{contributors.length} records inserted"
+  end
+
+  desc 'Find coauthors for contributors'
+  task :coauthors => :environment do
+    Rails.logger.level = Logger::ERROR
+    puts 'Destroying old coauthorship associations'
+    Coauthorship.destroy_all
+    contributors = Contributor.all.pluck(:person_id)
+    file = 'lib/tasks/csv/contributors.csv'
+    puts 'Reading contributor CSV...'
+    contributor_csv = CSV.read(file, options)
+    puts 'Grouping contributors by publication...'
+    product_hash = Hash.new {|hash, key| hash[key] = [] }
+    contributor_csv.each do |row|
+      product_id = row.fields[row.headers.index(:product_id)]
+      author_id = row.fields[row.headers.index(:person_id)]
+      if contributors.include? author_id
+        product_hash[product_id].push author_id
+      end
+    end
+    coauthor_hash = Hash.new {|hash, key| hash[key] = [] }
+    puts 'Determining coauthors'
+    product_hash.each do |product, authors|
+      authors.each do |author|
+        coauthor_hash[author].push(authors)
+      end
+    end
+    coauthor_hash.each do |author, coauthors|
+      coauthors.flatten!
+      coauthors.uniq!
+      coauthors.delete author
+      coauthors.each do |coauthor|
+        putc '.'
+        Coauthorship.create(author_id: author, coauthor_id: coauthor)
+      end
+    end
+    puts "\n#{Coauthorship.count} associations created."
   end
 
   desc 'Create database records from topic CSV file'
