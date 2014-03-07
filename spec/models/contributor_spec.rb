@@ -3,7 +3,8 @@
 # Table name: contributors
 #
 #  id                :integer          not null, primary key
-#  name              :string(255)
+#  surname           :string(255)
+#  given_name        :string(255)
 #  role              :string(255)
 #  primary_unit      :string(255)
 #  person_id         :integer

@@ -17,6 +17,12 @@ module ContributorHelper
     active && active.primary_unit_slug == unit.primary_unit_slug ? 'active' : ''
   end
 
+  def coauthor_query(author)
+    if author.coauthors.present?
+      "#{author_query(author)}|#{unit_query(author.coauthors)}"
+    end
+  end
+
   def unit_query(authors)
     authors.to_a.map{|author| author_query(author) }.join('|')
   end

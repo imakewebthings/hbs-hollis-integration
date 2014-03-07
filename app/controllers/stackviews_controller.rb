@@ -2,7 +2,7 @@ class StackviewsController < ActionController::Base
   require 'open-uri'
   require 'json'
 
-  LC_ENDPOINT = ENV['LC_ENDPOINT'] + '?filter=language:English'
+  LC_ENDPOINT = (ENV['LC_ENDPOINT'] || '') + '?filter=language:English'
 
   def show
     @params = params

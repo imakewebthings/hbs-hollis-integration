@@ -7,7 +7,7 @@ gem 'slim-rails', '~> 2.1.0'
 gem 'jquery-rails', '~> 3.0.4'
 gem 'pg', '~> 0.17.1'
 gem 'turbolinks', '~> 2.2.0'
-gem 'rails', '4.0.2'
+gem 'rails', '4.0.3'
 gem 'unicorn', '~> 4.8.0'
 
 group :development do
