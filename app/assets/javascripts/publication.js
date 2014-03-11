@@ -1,8 +1,9 @@
 (function() {
-  var lastId;
+  var $document = $(document);
+  var lastId, $original;
 
   function unloadPublication() {
-    $('#publication').empty();
+    $('#publication').empty().append($original);
   }
 
   function normalizeData(data) {
@@ -55,8 +56,21 @@
     $('.stack-item[data-stackid="' + lastId + '"]').addClass('active');
   }
 
+  function saveOriginal() {
+    $original = $('#publication').contents();
+  }
+
+  function clearOriginal() {
+    $original = null;
+  }
+
   function checkHash() {
     var id = location.hash.split('#')[1];
+
+    if (!$original) {
+      saveOriginal();
+    }
+
     if (id && id != lastId) {
       loadPublication(id);
     }
@@ -68,7 +82,7 @@
   }
 
   $(window).on('hashchange.publication', checkHash);
-  $(document)
-    .on('stackview.init', '.stackview', checkHash)
-    .on('stackview.pageload', '.stackview', highlight);
+  $document.on('stackview.init', '.stackview', checkHash);
+  $document.on('stackview.pageload', '.stackview', highlight);
+  $document.on('ready page:load', clearOriginal);
 })();

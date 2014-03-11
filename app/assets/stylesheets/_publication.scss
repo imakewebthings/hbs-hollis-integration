@@ -41,3 +41,19 @@
     background:shade($skyPink, 30%);
   }
 }
+
+.unit-authors {
+  h2 {
+    font-size:1.4em;
+    line-height:1;
+    margin-bottom:12px;
+  }
+
+  ul {
+    line-height:1.5;
+  }
+
+  a {
+    color:shade($sky, 50%);
+  }
+}

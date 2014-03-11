@@ -5,3 +5,8 @@ main.three-column
   section.column
     .stackview-container data-searchtype='author' data-query=unit_query(@authors) data-ribbon=@active_unit.primary_unit data-sort='pub_date_numeric desc' data-collection='hbs_edu,hollis_catalog'
   section.column#publication
+    .unit-authors
+      h2= "Authors in the #{@active_unit.primary_unit} Unit"
+      ul
+        - for author in @authors
+          li= link_to author_ribbon(author), author_path(author.name_slug)

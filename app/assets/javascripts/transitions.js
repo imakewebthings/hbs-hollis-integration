@@ -13,5 +13,6 @@
     })
     .on('page:restore', function() {
       $('.fat-inner p, .search-by:not(header .search-by)').slideDown();
+      $('.stackview-container, #publication').css('opacity', 1);
     });
 })();
