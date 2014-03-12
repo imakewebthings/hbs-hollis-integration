@@ -1,20 +1,31 @@
 script#publication-template type='text/x-template'
   .publication-container
-    h2.pubtitle <%= title %> <%= pub_date ? '('+pub_date+')' : '' %>
-    h3.format <%= format %>
-      
-    | <% if (containing_book) { %>
-    p.containing-book Appears in <i><%= containing_book %></i>
-    | <% } %>
+    .pub-info
+      h2.pubtitle <%= title %> <%= pub_date ? '('+pub_date+')' : '' %>
+      h3.format <%= format %>
+        
+      | <% if (containing_book) { %>
+      p.containing-book Appears in <i><%= containing_book %></i>
+      | <% } %>
 
-    ul.creators
-      | <% jQuery.each(creator, function(i, c) { %>
-      li <%= c %>
-      | <% }); %>
+      | <% if (topics.length) { %>
+      ul.topics
+        h3 Topics
+        | <% jQuery.each(topics, function(i, topic) { %>
+        li
+          | <a href='/topics/<%= parameterize(topic) %>'><%= topic %></a>
+        | <% }); %>
+      | <% } %>
+        
 
-    | <% if (description) { %>
-    p.description <%= description %>
-    | <% } %>
+      ul.creators
+        | <% jQuery.each(creator, function(i, c) { %>
+        li <%= c %>
+        | <% }); %>
+
+      | <% if (description) { %>
+      p.description <%= description %>
+      | <% } %>
 
     | <% if (url) { %>
     | <a class='view-item' href='<%= url %>' target='_blank'>View</a>
@@ -26,7 +37,7 @@ script#author-topics type='text/x-template'
     ul
       | <% jQuery.each(topics, function(i, topic) { %>
       li
-      | <a href='/topics/<%= parameterize(topic) %>'><%= topic %></a>
+        | <a href='/topics/<%= parameterize(topic) %>'><%= topic %></a>
       | <% }); %>
     | <% if (!topics.length) { %>
     p.no-topics No HBS topics found for this author.

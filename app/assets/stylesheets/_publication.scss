@@ -1,3 +1,9 @@
+.pub-info {
+  width:100%;
+  overflow:hidden;
+  margin-bottom:16px;
+}
+
 .pubtitle {
   font-size:1.4em;
   line-height:1;
@@ -39,6 +45,36 @@
 
   &:hover, &:focus {
     background:shade($skyPink, 30%);
+  }
+}
+
+.topics {
+  float:right;
+  width:50%;
+  padding:8px 12px;
+  background:$sky;
+  border-radius:10px;
+  font-size:.7em;
+  margin-top:-10px;
+
+  h3 {
+    margin-bottom:4px;
+  }
+
+  ul {
+    line-height:1;
+  }
+
+  li {
+    padding:2px 0;
+  }
+
+  a {
+    color:shade($sky, 50%);
+
+    &:hover, &:focus {
+      color:shade($sky, 80%);
+    }
   }
 }
 

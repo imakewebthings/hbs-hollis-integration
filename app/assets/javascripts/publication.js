@@ -2,6 +2,14 @@
   var $document = $(document);
   var lastId, $original;
 
+  function parameterize(str) {
+    return str
+      .replace(/[^-\w\s]/g, '')
+      .trim()
+      .replace(/[-\s]+/g, '-')
+      .toLowerCase();
+  }
+
   function unloadPublication() {
     $('#publication').empty().append($original);
   }
@@ -13,6 +21,8 @@
     normalized.url = data.url && data.url.length ? data.url[0] : null;
     normalized.pub_date = data.pub_date ? data.pub_date : null;
     normalized.creator = data.creator ? data.creator : [];
+    normalized.topics = data.topic ? data.topic[0].split(';') : [];
+    normalized.parameterize = parameterize;
     if (data.note) {
       $.each(data.note, function(i, note) {
         var cbMatch = note.match(/containing_book:(.*)/);
@@ -77,13 +87,7 @@
     return {
       name: $('.ribbon').text(),
       topics: topics,
-      parameterize: function(str) {
-        return str
-          .replace(/[^-\w\s]/g, '')
-          .trim()
-          .replace(/[-\s]+/g, '-')
-          .toLowerCase();
-      }
+      parameterize: parameterize
     }
   }
 
