@@ -19,3 +19,15 @@ script#publication-template type='text/x-template'
     | <% if (url) { %>
     | <a class='view-item' href='<%= url %>' target='_blank'>View</a>
     | <% } %>
+
+script#author-topics type='text/x-template'
+  .author-topics
+    h2 Topics <%= name %> Publishes Under
+    ul
+      | <% jQuery.each(topics, function(i, topic) { %>
+      li
+      | <a href='/topics/<%= parameterize(topic) %>'><%= topic %></a>
+      | <% }); %>
+    | <% if (!topics.length) { %>
+    p.no-topics No HBS topics found for this author.
+    | <% } %>

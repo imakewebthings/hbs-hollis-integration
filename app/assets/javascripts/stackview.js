@@ -18,7 +18,7 @@
       ribbon: ribbon,
       search_type: searchType,
       query: query,
-      items_per_page: 20,
+      items_per_page: 250,
       sort: sort,
       collection: collection
     });

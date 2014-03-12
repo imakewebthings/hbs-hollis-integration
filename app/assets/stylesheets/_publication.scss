@@ -42,7 +42,7 @@
   }
 }
 
-.unit-authors {
+.unit-authors, .author-topics {
   h2 {
     font-size:1.4em;
     line-height:1;
@@ -51,6 +51,12 @@
 
   ul {
     line-height:1.5;
+    font-size:.8em;
+  }
+
+  p {
+    font-size:.8em;
+    color:#888;
   }
 
   a {

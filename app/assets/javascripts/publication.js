@@ -56,8 +56,48 @@
     $('.stack-item[data-stackid="' + lastId + '"]').addClass('active');
   }
 
+  function authorTopics() {
+    var topicHash = {};
+    var topics = [];
+
+    $('.stack-item:not(.duplicate)').each(function() {
+      var item = $(this).data('stackviewItem');
+      var itemTopics = item && item.topic;
+      if (itemTopics) {
+        itemTopics = itemTopics[0].split(';')
+        $.each(itemTopics, function(i, topic) {
+          topicHash[topic] = 1;
+        });
+      }
+    });
+    $.each(topicHash, function(key, val) {
+      topics.push(key);
+    });
+
+    return {
+      name: $('.ribbon').text(),
+      topics: topics,
+      parameterize: function(str) {
+        return str
+          .replace(/[^-\w\s]/g, '')
+          .trim()
+          .replace(/[-\s]+/g, '-')
+          .toLowerCase();
+      }
+    }
+  }
+
   function saveOriginal() {
     $original = $('#publication').contents();
+  }
+
+  function saveAuthorTopics() {
+    if (!$original) {
+      $original = window.tmpl($('#author-topics').html(), authorTopics());
+      if (!lastId) {
+        unloadPublication();
+      }
+    }
   }
 
   function clearOriginal() {
@@ -85,4 +125,5 @@
   $document.on('stackview.init', '.stackview', checkHash);
   $document.on('stackview.pageload', '.stackview', highlight);
   $document.on('ready page:load', clearOriginal);
+  $document.on('stackview.pageload', '.author-stack', saveAuthorTopics);
 })();
