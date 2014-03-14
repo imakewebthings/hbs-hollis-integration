@@ -18,7 +18,7 @@ class StackviewsController < ActionController::Base
 
   private
     def collection_filter
-      "filter=collection:#{@params[:collection]}"
+      "filter=collection:#{CGI::escape @params[:collection]}"
     end
 
     def build_url(filter)
@@ -32,8 +32,7 @@ class StackviewsController < ActionController::Base
     end
 
     def lc_read(filter)
-      puts build_url(filter)
-      JSON.parse open(build_url(filter)).read
+      JSON.parse open(build_url(filter), { read_timeout: 60 }).read
     end
 
     def increment_page(json)
@@ -46,16 +45,19 @@ class StackviewsController < ActionController::Base
     end
 
     def author_hash
-      increment_page lc_read("creator_keyword:#{@params[:query]}")
+      increment_page lc_read("creator_keyword:(#{@params[:query]})")
     end
 
     def topic_hash
-      field = @params[:collection] == 'hbs_edu' ? 'topic_keyword' : 'lcsh'
-      value = @params[:query]
-      if field == 'lcsh'
-        value = Topic.find_by_name(value).lcsh
+      topic = @params[:query]
+      query = "topic_keyword:#{topic}"
+      if @params[:collection] != 'hbs_edu'
+        topic_record = Topic.find_by_name(topic)
+        if (topic_record)
+          query += " OR lcsh:#{topic_record.lcsh}"
+        end
       end
-      increment_page lc_read("#{field}:#{value}")
+      increment_page lc_read(query)
     end
 
     def empty_hash

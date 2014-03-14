@@ -52,7 +52,7 @@
   float:right;
   width:50%;
   padding:8px 12px;
-  background:$sky;
+  background:tint($sky, 50%);
   border-radius:10px;
   font-size:.7em;
   margin-top:-10px;

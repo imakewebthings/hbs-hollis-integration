@@ -7,5 +7,5 @@ main.three-column
       label
         input.coauthors type='checkbox' name='coauthors'
         | Expand to Include Coauthors
-    .stackview-container.author-stack data-searchtype='author' data-query=author_query(@active_author) data-ribbon=author_ribbon(@active_author) data-sort='pub_date_numeric desc' data-collection='hbs_edu,hollis_catalog' data-coauthorquery=coauthor_query(@active_author)
+    .stackview-container.author-stack data-searchtype='author' data-query=author_query(@active_author) data-ribbon=author_ribbon(@active_author) data-sort='pub_date_numeric desc' data-collection='hbs_edu OR hollis_catalog' data-coauthorquery=coauthor_query(@active_author)
   section.column#publication

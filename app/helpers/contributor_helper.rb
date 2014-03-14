@@ -6,7 +6,7 @@ module ContributorHelper
   end
 
   def author_query(author)
-    "#{transliterate(author.surname)}, #{transliterate(author.given_name)}"
+    "\"#{transliterate(author.surname)}, #{transliterate(author.given_name)}\""
   end
 
   def author_ribbon(author)
@@ -19,11 +19,11 @@ module ContributorHelper
 
   def coauthor_query(author)
     if author.coauthors.present?
-      "#{author_query(author)}|#{unit_query(author.coauthors)}"
+      "#{author_query(author)} OR #{unit_query(author.coauthors)}"
     end
   end
 
   def unit_query(authors)
-    authors.to_a.map{|author| author_query(author) }.join('|')
+    authors.to_a.map{|author| author_query(author) }.join(' OR ')
   end
 end
