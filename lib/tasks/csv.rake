@@ -15,7 +15,7 @@ namespace :csv do
     puts 'Destroying existing contributor records'
     Contributor.destroy_all
     puts 'Generating new records from CSV'
-    contibutors_csv = CSV.read(file, options)
+    contributors_csv = CSV.read(file, options)
     contributors = contributors_csv.collect do |row|
       is_hbs = row.fields[row.headers.index(:contributor_type)] == 'HBS'
       is_editor = row.fields[row.headers.index(:contributor_role)] == 'editor'
@@ -117,5 +117,93 @@ namespace :csv do
       puts "\nInserting generated records"
     end
     puts "#{topics.length} records inserted"
+  end
+
+  desc 'Fix contributor author names to match LC entries'
+  task :fixnames => :environment do
+    Rails.logger.level = Logger::ERROR
+    puts 'Fixing contributor names'
+    file = 'lib/tasks/csv/author_names.csv'
+    names = CSV.read(file, options).collect do |row|
+      name = row.fields[row.headers.index(:hbs_creator)]
+      lc_names = row.fields[row.headers.index(:lc_names)] || ''
+      {
+        surname: name.split(', ')[0],
+        given_name: name.split(', ')[1],
+        lc_names: lc_names.split('%%')
+      }
+    end
+    # Manual on-off cases
+    Contributor.find_by_given_name('Dutch').update({
+      given_name: 'Herman B.',
+      name_slug: 'herman-b-leonard'
+    })
+    Contributor.find_by_surname('Linde').update({
+      surname: 'van der Linde',
+      given_name: 'Claas M.',
+      name_slug: 'claas-m-van-der-linde'
+    })
+    Contributor.find_by_surname('Tella').update({
+      surname: 'Di Tella',
+      given_name: 'Rafael M.',
+      name_slug: 'rafael-m-di-tella'
+    })
+    hit_count = 3
+    names.each do |name|
+      contributor = Contributor.where(surname: name[:surname])
+      next if contributor.length == 0
+      if contributor.length == 1
+        c = contributor.first
+        c.given_name = name[:given_name]
+        c.name_slug = "#{name[:given_name]} #{c.surname}".parameterize
+        c.lc_names = name[:lc_names].join(' OR ')
+        hit_count += 1 
+        c.save!
+      else
+        given_name_parts = name[:given_name].split(' ')
+        initials = given_name_parts.map{|x| "#{x[0]}." }.join(' ')
+        contributor.to_a.each do |c|
+          # P. J. -> Paul J.
+          initial_match = initials == c.given_name
+          # J. -> John C.
+          first_initial_match = initials.split(' ')[0] == c.given_name
+          # L. Morgan -> Laura Morgan
+          middle_match = false
+          existing_name_parts = c.given_name.split(' ')
+          if !initial_match && !first_initial_match && existing_name_parts.length == 2 && given_name_parts.length == 2
+            middle_match = existing_name_parts[1] == given_name_parts[1] &&
+                           existing_name_parts[0][0] == given_name_parts[0][0]
+          end
+          if initial_match || first_initial_match || middle_match 
+            c.given_name = name[:given_name]
+            c.name_slug = "#{name[:given_name]} #{c.surname}".parameterize
+            c.lc_names = name[:lc_names].join(' OR ')
+            hit_count += 1
+            c.save!
+          end
+        end
+      end
+    end
+    puts "#{hit_count} names adjusted"
+  end
+
+  desc 'Drop authors with no hits on their name in hbs_edu'
+  task :compact => :environment do
+    require 'open-uri'
+    require 'json'
+    puts 'Removing authors without hbs_edu records'
+    Rails.logger.level = Logger::ERROR
+    LC_ENDPOINT = 'http://hlslwebtest.law.harvard.edu/v1/api/item/?filter=collection:hbs_edu&filter=language:English&filter=creator_keyword:'
+    hitcount = 0
+    authors = Contributor.select(:id, :surname, :given_name).to_a
+    authors.each do |author|
+      name = "#{author.surname}, #{author.given_name}"
+      response = JSON.parse open(LC_ENDPOINT + CGI::escape(name)).read
+      if response['num_found'] == 0
+        author.destroy!
+        hitcount += 1
+      end
+    end
+    puts "#{hitcount} authors removed"
   end
 end

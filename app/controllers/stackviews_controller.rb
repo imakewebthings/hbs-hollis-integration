@@ -32,6 +32,7 @@ class StackviewsController < ActionController::Base
     end
 
     def lc_read(filter)
+      puts build_url(filter)
       JSON.parse open(build_url(filter)).read
     end
 
@@ -49,7 +50,7 @@ class StackviewsController < ActionController::Base
     end
 
     def topic_hash
-      field = @params[:collection] == 'hbs_edu' ? 'note_keyword' : 'lcsh'
+      field = @params[:collection] == 'hbs_edu' ? 'topic_keyword' : 'lcsh'
       value = @params[:query]
       if field == 'lcsh'
         value = Topic.find_by_name(value).lcsh

@@ -23,6 +23,7 @@
     normalized.creator = data.creator ? data.creator : [];
     normalized.topics = data.topic ? data.topic[0].split(';') : [];
     normalized.parameterize = parameterize;
+    normalized.lcsh = data.lcsh ? data.lcsh : [];
     if (data.note) {
       $.each(data.note, function(i, note) {
         var cbMatch = note.match(/containing_book:(.*)/);

@@ -8,14 +8,21 @@ script#publication-template type='text/x-template'
       p.containing-book Appears in <i><%= containing_book %></i>
       | <% } %>
 
-      | <% if (topics.length) { %>
-      ul.topics
+
+      | <% if (topics.length || lcsh.length) { %>
+      .topics
         h3 Topics
-        | <% jQuery.each(topics, function(i, topic) { %>
-        li
-          | <a href='/topics/<%= parameterize(topic) %>'><%= topic %></a>
-        | <% }); %>
+        ul
+          | <% jQuery.each(topics, function(i, topic) { %>
+          li
+            | <a href='/topics/<%= parameterize(topic) %>'><%= topic %></a>
+          | <% }); %>
+
+          | <% jQuery.each(lcsh, function(i, topic) { %>
+          li <%= topic %>
+          | <% }); %>
       | <% } %>
+
         
 
       ul.creators
