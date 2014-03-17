@@ -8,7 +8,7 @@
       $('.stackview-container, #publication').animate({ opacity: 0.3 });
       $('.search-by:not(header .search-by)').slideUp();
     })
-    .on('click', '.stack-item', function() {
+    .on('click', '.stack-item:not(.active)', function() {
       $('.publication-container').animate({ opacity: 0.3 });
     })
     .on('page:restore', function() {

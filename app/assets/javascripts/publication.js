@@ -110,6 +110,7 @@
   }
 
   function checkHash() {
+    console.log('hit');
     var id = location.hash.split('#')[1];
 
     if (!$original) {

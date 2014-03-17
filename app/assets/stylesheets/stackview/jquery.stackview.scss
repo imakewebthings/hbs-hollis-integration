@@ -198,6 +198,7 @@
     > a {
       background:$skyPink;
       border-color:shade($skyPink, 10%);
+      cursor:default;
     }
 
     .stack-pages {
