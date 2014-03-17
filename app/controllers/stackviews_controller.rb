@@ -32,6 +32,7 @@ class StackviewsController < ActionController::Base
     end
 
     def lc_read(filter)
+      puts build_url(filter)
       JSON.parse open(build_url(filter), { read_timeout: 60 }).read
     end
 
@@ -50,11 +51,11 @@ class StackviewsController < ActionController::Base
 
     def topic_hash
       topic = @params[:query]
-      query = "topic_keyword:#{topic}"
+      query = "topic_keyword:\"#{topic}\""
       if @params[:collection] != 'hbs_edu'
         topic_record = Topic.find_by_name(topic)
         if (topic_record)
-          query += " OR lcsh:#{topic_record.lcsh}"
+          query += " OR lcsh:\"#{topic_record.lcsh}\""
         end
       end
       increment_page lc_read(query)

@@ -11,5 +11,5 @@ main.three-column
         label title="Using Library of Congress Subject Heading: #{@active_topic.lcsh}"
           input type='radio' name='collection' value='hollis_catalog OR hbs_edu'
           | All HOLLIS
-    .stackview-container data-searchtype='topic' data-query=@active_topic.name data-ribbon=@active_topic.name data-sort='shelfrank desc' data-collection='hbs_edu'
+    .stackview-container data-searchtype='topic' data-query=@active_topic.name data-ribbon=@active_topic.name data-sort='collection asc,shelfrank desc' data-collection='hbs_edu'
   section.column#publication
