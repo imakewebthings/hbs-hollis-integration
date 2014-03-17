@@ -1,13 +1,15 @@
 script#publication-template type='text/x-template'
   .publication-container
     .pub-info
+      | <% if (title) { %>
       h2.pubtitle <%= title %> <%= pub_date ? '('+pub_date+')' : '' %>
+      | <% } %>
+
       h3.format <%= format %>
         
       | <% if (containing_book) { %>
       p.containing-book Appears in <i><%= containing_book %></i>
       | <% } %>
-
 
       | <% if (topics.length || lcsh.length) { %>
       .topics
