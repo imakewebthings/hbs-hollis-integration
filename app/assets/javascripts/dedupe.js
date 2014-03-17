@@ -22,6 +22,9 @@
         var previousYear = previousData.pub_date_numeric;
         var previousTitle = previousData.title.toLowerCase();
 
+        title = title.replace('&', '').replace('and', '');
+        previousTitle = previousTitle.replace('&', '').replace('and', '');
+
         $previous.addClass('deduped');
         if (stringSubset(previousTitle, title) && previousYear === year) {
           $previous.addClass('duplicate');
