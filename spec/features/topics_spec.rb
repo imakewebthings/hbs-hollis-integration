@@ -5,7 +5,6 @@ describe '/topics' do
     visit topics_path
   end
 
-  specify { page.should have_selector 'header.fat' }
   specify { page.should have_selector '.search-list select' }
 end
 

@@ -1,0 +1,39 @@
+.intro {
+  max-width:660px;
+  width:100%;
+  padding:32px 10px;
+  margin:0 auto;
+
+  h1 {
+    text-align:center;
+    color:#aaa;
+    margin-bottom:24px;
+    text-transform:uppercase;
+
+    span {
+      display:block;
+    }
+  }
+
+  p {
+    font-size:.8em;
+    margin-bottom:16px;
+  }
+
+  a {
+    color:darken($sky, 20%);
+
+    &:hover, &:focus {
+      color:shade($skyPink, 20%);
+    }
+  }
+}
+
+.welcome, .project {
+  font-weight:normal;
+  font-size:.3333em;
+}
+
+.integration {
+  color:#333;
+}

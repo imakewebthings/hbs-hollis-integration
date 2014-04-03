@@ -84,7 +84,9 @@
     line-height:1;
     margin-bottom:12px;
   }
+}
 
+.author-topics {
   ul {
     line-height:1.5;
     font-size:.8em;
@@ -97,5 +99,37 @@
 
   a {
     color:shade($sky, 50%);
+  }
+}
+
+.unit-authors {
+  li a {
+    padding:5px 10px;
+    display:block;
+    text-decoration:none;
+    color:shade($sky, 70%);
+  }
+
+  li:nth-child(odd) a {
+    background:tint($sky, 70%);
+  }
+
+  ul li a {
+    &:hover, &:focus {
+      background:tint($skyPink, 50%);
+    }
+  }
+
+  li span {
+    display:block;
+  }
+
+  .author-name {
+    font-size:.8em;
+  }
+
+  .author-title {
+    font-size:0.6em;
+    color:shade($sky, 40%);
   }
 }

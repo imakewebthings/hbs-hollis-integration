@@ -9,4 +9,9 @@ main.three-column
       h2= "Authors in the #{@active_unit.primary_unit} Unit"
       ul
         - for author in @authors
-          li= link_to author_ribbon(author), author_path(author.name_slug)
+          li
+            = link_to author_path(author.name_slug) do
+              span.author-name= author_ribbon(author)
+              - if author.title
+                span.author-title== author.title
+              

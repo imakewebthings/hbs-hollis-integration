@@ -1,18 +1,15 @@
 (function() {
   $(document)
     .on('click', '.search-by a', function() {
-      $('.fat-inner p').slideUp();
-      $('main').animate({ opacity: 0.3 });
+      $('main').animate({ opacity: 0.2 });
     })
     .on('click', '.search-list a', function() {
-      $('.stackview-container, #publication').animate({ opacity: 0.3 });
-      $('.search-by:not(header .search-by)').slideUp();
+      $('.stackview-container, #publication').animate({ opacity: 0.2 });
     })
     .on('click', '.stack-item:not(.active)', function() {
-      $('.publication-container').animate({ opacity: 0.3 });
+      $('.publication-container').animate({ opacity: 0.2 });
     })
     .on('page:restore', function() {
-      $('.fat-inner p, .search-by:not(header .search-by)').slideDown();
-      $('.stackview-container, #publication').css('opacity', 1);
+      $('.stackview-container, #publication, main').animate({ opacity: 1 });
     });
 })();

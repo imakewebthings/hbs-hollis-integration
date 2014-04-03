@@ -1,2 +1,26 @@
-= render 'shared/fat_header', description: true
-= render 'shared/search_by'
+= render 'shared/header'
+
+main.intro
+  h1
+    span.welcome Welcome to the
+    span.integration HBS-HOLLIS Integration
+    span.project Project
+
+  p Harvard Business School faculty members are prolific scholars and writers regularly authoring materials that are not included in the Harvard Library catalog &mdash; HOLLIS &mdash; including journal articles, case studies, BLOG posts, presentations, and other course materials.
+
+  p 
+    | This project integrates what HBS and HOLLIS know about the HBS faculty&rsquo;s works, for the first time providing a combined listing that links across 
+    a href='/authors' authors
+    | , their 
+    a href='/units' units
+    | , and their 
+    a href='/topics' topics
+    | , and putting them all (or nearly all) on a single shelf.
+
+  p That shelf, of course, is highly dynamic, enabling fluid navigation based on the user's interests. Click and scroll it to see how it works.
+
+  p
+    strong The challenge 
+    | was to integrate very different sets of data, with differences in taxonomies (HBS&rsquo; topics vocabulary and HOLLIS&rsquo; use of Library of Congress Subject Headings), variations in authors&rsquo; names, differences in the types of content cataloged, and even differences in how titles have been recorded.
+
+  p We&rsquo;re excited about how easy this project makes it look. But please do keep in mind that this is a pre-alpha version. We&rsquo;d be delighted to get your feedback:
