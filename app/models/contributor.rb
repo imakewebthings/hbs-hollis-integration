@@ -24,7 +24,8 @@ class Contributor < ActiveRecord::Base
   def self.authors!
     self
       .uniq
-      .select(:surname, :given_name, :name_slug, :person_id, :title)
+      .select(:surname, :given_name, :name_slug, :person_id, :title,
+              :full_biography)
       .order(:surname)
   end
 

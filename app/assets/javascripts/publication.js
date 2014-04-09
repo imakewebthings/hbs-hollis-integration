@@ -87,6 +87,7 @@
 
     return {
       name: $('.ribbon').text(),
+      bio: $('.stackview').data('bio'),
       topics: topics,
       parameterize: parameterize
     }

@@ -41,8 +41,10 @@ script#publication-template type='text/x-template'
     | <% } %>
 
 script#author-topics type='text/x-template'
+  h2.author-heading <%= name %>
+  p.author-bio <%= bio %>
   .author-topics
-    h2 Topics <%= name %> Publishes Under
+    h3 Publishes in Topics
     ul
       | <% jQuery.each(topics, function(i, topic) { %>
       li

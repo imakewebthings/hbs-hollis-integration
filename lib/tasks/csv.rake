@@ -1,6 +1,8 @@
 require 'csv' 
 
 namespace :csv do
+  include ActiveSupport::Inflector
+
   options = {
     col_sep: "\t",
     headers: true,
@@ -23,12 +25,8 @@ namespace :csv do
       if !is_hbs || is_editor
         next
       end
-      valid_publication_types = ['Book', 'Book Component']
-      publication_type = row.fields[row.headers.index(:publication_type)]
-      unless valid_publication_types.include? publication_type
-        next
-      end
       name_parts = row.fields[row.headers.index(:title_title)].split
+      name_parts.reject! {|str| str == 'Jr.' }
       name_slug = name_parts.join(' ').parameterize
       surname = name_parts.pop
       given_name = name_parts.join ' '
@@ -197,7 +195,7 @@ namespace :csv do
     hitcount = 0
     authors = Contributor.select(:id, :surname, :given_name).to_a
     authors.each do |author|
-      name = "#{author.surname}, #{author.given_name}"
+      name = "#{transliterate(author.surname)}, #{transliterate(author.given_name)}"
       response = JSON.parse open(LC_ENDPOINT + CGI::escape(name)).read
       if response['num_found'] == 0
         author.destroy!
@@ -205,5 +203,24 @@ namespace :csv do
       end
     end
     puts "#{hitcount} authors removed"
+  end
+
+  desc 'Add biography data to contributors'
+  task :biographies => :environment do
+    Rails.logger.level = Logger::ERROR
+    puts 'Reading biography CSV'
+    file = 'lib/tasks/csv/hbs_edu_biographies.csv'
+    hit_count = 0
+    CSV.read(file, options).collect do |row|
+      person_id = row.fields[row.headers.index(:person_id)]
+      c = Contributor.find_by_person_id person_id
+      next unless c
+      c.brief_biography = row.fields[row.headers.index(:brief_biography)]
+      c.full_biography = row.fields[row.headers.index(:full_biography)]
+      c.save
+      putc '.'
+      hit_count += 1
+    end
+    puts "\n#{hit_count} biographies added"
   end
 end

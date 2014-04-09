@@ -78,18 +78,39 @@
   }
 }
 
-.unit-authors, .author-topics {
-  h2 {
-    font-size:1.4em;
-    line-height:1;
-    margin-bottom:12px;
-  }
+.unit-authors h2, .author-heading {
+  font-size:1.4em;
+  line-height:1;
+  margin-bottom:12px;
+}
+
+.author-bio {
+  font-size:.7em;
+  color:#666;
+  margin-bottom:12px;
 }
 
 .author-topics {
+  font-size:.8em;
+  background:tint($sky, 70%);
+  border-radius:5px;
+  padding:8px 10px;
+
   ul {
     line-height:1.5;
     font-size:.8em;
+  }
+
+  li {
+    display:inline;
+
+    &:before {
+      content:', ';
+    }
+
+    &:first-child:before {
+      content:'';
+    }
   }
 
   p {

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140313174046) do
+ActiveRecord::Schema.define(version: 20140409201921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20140313174046) do
     t.string  "name_slug"
     t.string  "primary_unit_slug"
     t.string  "lc_names"
+    t.text    "brief_biography"
+    t.text    "full_biography"
   end
 
   add_index "contributors", ["name_slug"], name: "index_contributors_on_name_slug", using: :btree
