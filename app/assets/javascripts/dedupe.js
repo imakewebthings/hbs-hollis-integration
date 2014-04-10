@@ -11,6 +11,44 @@
     return a.indexOf(b) > -1 || b.indexOf(a) > -1;
   }
 
+  function concatData(source, target) {
+    $.each(['url', 'lcsh'], function(i, prop) {
+      source[prop] = source[prop] || [];
+      target[prop] = target[prop] || [];
+      target[prop] = target[prop].concat(source[prop]);
+      $.unique(target[prop]);
+    });
+
+    $.each([source, target], function(i, obj) {
+      if (!$.isArray(obj.source_record.collection)) {
+        obj.source_record.collection = [obj.source_record.collection];
+      }
+    });
+    target.source_record.collection = target.source_record.collection.concat(
+      source.source_record.collection
+    );
+    $.unique(target.source_record.collection);
+
+    target.topic = target.topic || [];
+    target.topic[0] = target.topic[0] ? target.topic[0].split(';') : [];
+    source.topic = source.topic || [];
+    var sourceTopic = source.topic[0] ? source.topic[0].split(';') : [];
+    target.topic[0] = target.topic[0].concat(sourceTopic).join(';');
+  }
+
+  function updateRendering($current, currentData) {
+    var isHbs = !!$.grep(currentData.source_record.collection, function(c) {
+      return c === 'hbs_edu'
+    }).length;
+    var isHollis = !!$.grep(currentData.source_record.collection, function(c) {
+      return c === 'hollis_catalog'
+    }).length;
+    $current.attr({
+      'data-hbs': isHbs,
+      'data-hollis': isHollis
+    });
+  }
+
   function dedupe() {
     $('.stack-item:not(.deduped)').each(function() {
       if ($previous) {
@@ -27,7 +65,9 @@
 
         $previous.addClass('deduped');
         if (stringSubset(previousTitle, title) && previousYear === year) {
+          concatData(previousData, currentData);
           $previous.addClass('duplicate');
+          updateRendering($current, currentData);
         }
       }
       $previous = $(this);

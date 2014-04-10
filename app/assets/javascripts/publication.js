@@ -44,7 +44,7 @@
   }
 
   function requestItem(id) {
-    $.get('http://librarycloud.harvard.edu/v1/api/item/' + id, function(data) {
+    $.get('http://hlslwebtest.law.harvard.edu/v2/api/item/' + id, function(data) {
       var itemData = data.docs[0];
       if (itemData) {
         renderPublication(itemData);
@@ -125,6 +125,10 @@
     }
     lastId = id;
     highlight();
+  }
+
+  function rerenderPublication(event) {
+    loadPublication($(this).data('stackid'));
   }
 
   $(window).on('hashchange.publication', checkHash);
