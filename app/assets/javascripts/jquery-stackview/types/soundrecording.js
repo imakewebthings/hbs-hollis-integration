@@ -23,7 +23,7 @@
 				heat: window.StackView.utils.get_heat(item.shelfrank),
 				link: '#',
 				title: item.title,
-				year: item.pub_date
+				year: item.pub_date_numeric
 			};
 		},
 

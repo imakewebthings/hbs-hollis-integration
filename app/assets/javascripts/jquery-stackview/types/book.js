@@ -237,7 +237,7 @@
         id: item.id,
 				title: item.title,
 				author: get_author(item),
-				year: item.pub_date,
+				year: item.pub_date_numeric,
         rawItem: item,
         hbs: item.source_record.collection === 'hbs_edu'
       };

@@ -36,7 +36,7 @@
 				/* TODO: How should video widths be calculated? */
 				height: '65%',
 				title: item.title,
-				year: item.pub_date,
+				year: item.pub_date_numeric,
 				link: '#' + item.id,
         id: item.id,
         hbs: item.source_record.collection === 'hbs_edu'
