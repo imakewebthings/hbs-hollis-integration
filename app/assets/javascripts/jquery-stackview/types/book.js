@@ -145,6 +145,24 @@
 		return author;
 	};
 
+  var is_hbs = function(item) {
+    if ($.isArray(item.source_record.collection)) {
+      return !!$.grep(item.source_record.collection, function(c) {
+        return c === 'hbs_edu';
+      }).length;
+    }
+    return item.source_record.collection === 'hbs_edu';
+  };
+
+  var is_hollis = function(item) {
+    console.log(item);
+    if ($.isArray(item.source_record.collection)) {
+      return !!$.grep(item.source_record.collection, function(c) {
+        return c === 'hollis_catalog';
+      }).length;
+    }
+    return item.source_record.collection === 'hollis_catalog';
+  };
 
 	/*
 	   Book type definition.
@@ -167,12 +185,13 @@
 				author: get_author(item),
 				year: item.pub_date,
         rawItem: item,
-        hbs: item.source_record.collection === 'hbs_edu'
+        hbs: is_hbs(item),
+        hollis: is_hollis(item)
 			};
 		},
 
 		template: '\
-			<li class="stack-item stack-book heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>">\
+			<li class="stack-item stack-book heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>" data-hollis="<%= hollis %>">\
 				<a href="<%= link %>">\
 					<span class="spine-text">\
 						<span class="spine-title"><%= title %></span>\
@@ -203,12 +222,13 @@
 				author: get_author(item),
 				year: item.pub_date,
         rawItem: item,
-        hbs: item.source_record.collection === 'hbs_edu'
+        hbs: is_hbs(item),
+        hollis: is_hollis(item)
       };
     },
 
     template: '\
-			<li class="stack-item stack-book book-component heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>">\
+			<li class="stack-item stack-book book-component heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>" data-hollis="<%= hollis %>">\
 				<a href="<%= link %>">\
 					<span class="spine-text">\
 						<span class="spine-title"><%= title %></span>\
@@ -239,12 +259,13 @@
 				author: get_author(item),
 				year: item.pub_date_numeric,
         rawItem: item,
-        hbs: item.source_record.collection === 'hbs_edu'
+        hbs: is_hbs(item),
+        hollis: is_hollis(item)
       };
     },
 
     template: '\
-			<li class="stack-item stack-book unidentified heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>">\
+			<li class="stack-item stack-book hbs-type heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>" data-hollis="<%= hollis %>">\
 				<a href="<%= link %>">\
 					<span class="spine-text">\
 						<span class="spine-title"><%= title %></span>\

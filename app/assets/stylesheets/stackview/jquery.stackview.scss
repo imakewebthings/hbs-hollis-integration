@@ -174,16 +174,40 @@
   -webkit-transition:-webkit-transform 300ms ease-in-out;
   transition:transform 200ms ease-in-out;
 
-  &[data-hbs="true"] {
+  &[data-hbs="true"], &[data-hollis="true"] {
     &:before {
       position:absolute;
-      z-index:1;
+      z-index:3;
       left:15px;
       bottom:0;
-      content:'HBS';
       padding:1px 2px;
       font-size:9px;
-      background:#a41034;
+      color:#fff;
+      letter-spacing:1px;
+      border-radius:3px;
+    }
+  }
+
+  &[data-hollis="true"]:before {
+    content:'HOLLIS';
+    background:#1034a4;
+  }
+
+  &[data-hbs="true"]:before {
+    content:'HBS';
+    background:#a41034;
+  }
+
+  &[data-hbs="true"][data-hollis="true"] {
+    &:after {
+      content:'HOLLIS';
+      background:#1034a4;
+      position:absolute;
+      z-index:3;
+      left:42px;
+      bottom:0;
+      padding:1px 2px;
+      font-size:9px;
       color:#fff;
       letter-spacing:1px;
       border-radius:3px;
@@ -243,8 +267,32 @@
   }
 }
 
-.unidentified > a {
+.hbs-type > a {
   background:#ddd;
+  border-color:#ccc;
+  border-radius:0;
+
+  .stack-pages {
+    background:#eee;
+    border-radius:0;
+    border-color:#ccc;
+    border-width:2px;
+    bottom:-2px;
+    right:-12px;
+
+    &:after {
+      display:none;
+    }
+  }
+
+  .stack-cover {
+    background:#eee;
+    border-radius:0;
+    border-color:#ccc;
+    height:3px;
+    top:-5px;
+    right:1px;
+  }
 }
 
 .stack-items:before, .stack-items:after {

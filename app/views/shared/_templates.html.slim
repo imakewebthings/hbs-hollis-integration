@@ -2,7 +2,7 @@ script#publication-template type='text/x-template'
   .publication-container
     .pub-info
       | <% if (title) { %>
-      h2.pubtitle <%= title %> <%= pub_date ? '('+pub_date+')' : '' %>
+      h2.pubtitle <%= title %> <%= pub_date ? '('+pub_date_numeric+')' : '' %>
       | <% } %>
 
       h3.format <%= format %>

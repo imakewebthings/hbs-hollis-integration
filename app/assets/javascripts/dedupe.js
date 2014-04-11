@@ -33,15 +33,16 @@
     target.topic[0] = target.topic[0] ? target.topic[0].split(';') : [];
     source.topic = source.topic || [];
     var sourceTopic = source.topic[0] ? source.topic[0].split(';') : [];
-    target.topic[0] = target.topic[0].concat(sourceTopic).join(';');
+    var targetTopic = target.topic[0].concat(sourceTopic).join(';');
+    target.topic = targetTopic ? [targetTopic] : null;
   }
 
   function updateRendering($current, currentData) {
     var isHbs = !!$.grep(currentData.source_record.collection, function(c) {
-      return c === 'hbs_edu'
+      return c === 'hbs_edu';
     }).length;
     var isHollis = !!$.grep(currentData.source_record.collection, function(c) {
-      return c === 'hollis_catalog'
+      return c === 'hollis_catalog';
     }).length;
     $current.attr({
       'data-hbs': isHbs,
