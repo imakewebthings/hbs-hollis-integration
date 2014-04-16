@@ -31,7 +31,6 @@
 .description {
   font-size:.8em;
   color:#333;
-  margin-bottom:16px;
 }
 
 .view-item {
@@ -42,6 +41,7 @@
   text-decoration:none;
   background:shade($sky, 50%);
   border-radius:10px;
+  margin-bottom:8px;
 
   &:hover, &:focus {
     background:shade($skyPink, 30%);

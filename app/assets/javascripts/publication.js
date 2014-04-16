@@ -16,14 +16,19 @@
 
   function normalizeData(data) {
     var normalized = $.extend(true, {}, data);
+    var hollisBase = 'http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|';
+    var isHbs = data.source_record.collection === 'hbs_edu';
+    var isHollis = data.source_record.collection === 'hollis_catalog';
     normalized.description = null;
     normalized.containing_book = null;
-    normalized.url = data.url && data.url.length ? data.url[0] : null;
+    normalized.hbs_url = null;
+    normalized.hollis_url = null;
     normalized.pub_date = data.pub_date ? data.pub_date : null;
     normalized.creator = data.creator ? data.creator : [];
     normalized.topics = data.topic ? data.topic[0].split(';') : [];
     normalized.parameterize = parameterize;
     normalized.lcsh = data.lcsh ? data.lcsh : [];
+
     if (data.note) {
       $.each(data.note, function(i, note) {
         var cbMatch = note.match(/containing_book:(.*)/);
@@ -34,6 +39,23 @@
           normalized.description = note;
         }
       });
+    }
+
+    if ($.isArray(data.source_record.collection)) {
+      if (data.url) {
+        normalized.hbs_url = $.grep(data.url, function(url) {
+          return url.match(/hbs\.edu/);
+        })[0];
+      }
+      if (data.id_inst) {
+        normalized.hollis_url = hollisBase + data.id_inst;
+      }
+    }
+    else if (isHbs && data.url && data.url.length) {
+      normalized.hbs_url = data.url[0];
+    }
+    else if (isHollis) {
+      normalized.hollis_url = hollisBase + data.id_inst;
     }
     return normalized;
   }

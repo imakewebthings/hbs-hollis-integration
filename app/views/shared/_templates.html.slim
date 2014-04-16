@@ -25,8 +25,6 @@ script#publication-template type='text/x-template'
           | <% }); %>
       | <% } %>
 
-        
-
       ul.creators
         | <% jQuery.each(creator, function(i, c) { %>
         li <%= c %>
@@ -36,8 +34,12 @@ script#publication-template type='text/x-template'
       p.description <%= description %>
       | <% } %>
 
-    | <% if (url) { %>
-    | <a class='view-item' href='<%= url %>' target='_blank'>View</a>
+    | <% if (hbs_url) { %>
+    | <a class='view-item' href='<%= hbs_url %>' target='_blank'>View HBS</a>
+    | <% } %>
+
+    | <% if (hollis_url) { %>
+    | <a class='view-item' href='<%= hollis_url %>' target='_blank'>View HOLLIS</a>
     | <% } %>
 
 script#author-topics type='text/x-template'

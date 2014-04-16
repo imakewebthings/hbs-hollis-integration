@@ -15,7 +15,10 @@
 		name: 'serial',
 
 		match: function(item) {
-			return item.format === 'Serial';
+      return {
+        'Serial': true,
+        'Collection': true
+      }[item.format];
 		},
 
 		adapter: function(item, options) {
