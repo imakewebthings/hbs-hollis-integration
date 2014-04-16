@@ -155,7 +155,6 @@
   };
 
   var is_hollis = function(item) {
-    console.log(item);
     if ($.isArray(item.source_record.collection)) {
       return !!$.grep(item.source_record.collection, function(c) {
         return c === 'hollis_catalog';
@@ -241,23 +240,23 @@
 			</li>'
   });
 
-  /* Unidentified Type */
+  /* Working Paper Type */
   window.StackView.register_type({
-    name: 'unidentified',
+    name: 'working_paper',
     match: function(item) {
-      return true;
+      return item.format === 'Working Paper';
     },
 
-		adapter: function(item, options) {
-			return {
-				heat: window.StackView.utils.get_heat(item.shelfrank || 0),
-				book_height: get_height(options, item),
-				book_thickness: get_thickness(options, item),
-				link: '#' + item.id,
+    adapter: function(item, options) {
+      return {
+        heat: window.StackView.utils.get_heat(item.shelfrank || 0),
+        book_height: get_height(options, item),
+        book_thickness: get_thickness(options, item),
+        link: '#' + item.id,
         id: item.id,
-				title: item.title,
-				author: get_author(item),
-				year: item.pub_date_numeric,
+        title: item.title,
+        author: get_author(item),
+        year: item.pub_date_numeric,
         rawItem: item,
         hbs: is_hbs(item),
         hollis: is_hollis(item)
@@ -265,16 +264,245 @@
     },
 
     template: '\
-			<li class="stack-item stack-book hbs-type heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>" data-hollis="<%= hollis %>">\
-				<a href="<%= link %>">\
-					<span class="spine-text">\
-						<span class="spine-title"><%= title %></span>\
-						<span class="spine-author"><%= author %></span>\
-					</span>\
-					<span class="spine-year"><%= year %></span>\
-					<span class="stack-pages" />\
-					<span class="stack-cover" />\
-				</a>\
-			</li>'
+    <li class="stack-item stack-book hbs-type working-paper heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>" data-hollis="<%= hollis %>">\
+    <a href="<%= link %>">\
+    <span class="spine-text">\
+    <span class="spine-title"><%= title %></span>\
+    <span class="spine-author"><%= author %></span>\
+    </span>\
+    <span class="spine-year"><%= year %></span>\
+    <span class="stack-pages" />\
+    <span class="stack-cover" />\
+    </a>\
+    </li>'
+  });
+
+  /* Presentation Type */
+  window.StackView.register_type({
+    name: 'presentation',
+    match: function(item) {
+      return item.format === 'Presentation';
+    },
+
+    adapter: function(item, options) {
+      return {
+        heat: window.StackView.utils.get_heat(item.shelfrank || 0),
+        book_height: get_height(options, item),
+        book_thickness: get_thickness(options, item),
+        link: '#' + item.id,
+        id: item.id,
+        title: item.title,
+        author: get_author(item),
+        year: item.pub_date_numeric,
+        rawItem: item,
+        hbs: is_hbs(item),
+        hollis: is_hollis(item)
+      };
+    },
+
+    template: '\
+    <li class="stack-item stack-book hbs-type presentation heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>" data-hollis="<%= hollis %>">\
+    <a href="<%= link %>">\
+    <span class="spine-text">\
+    <span class="spine-title"><%= title %></span>\
+    <span class="spine-author"><%= author %></span>\
+    </span>\
+    <span class="spine-year"><%= year %></span>\
+    <span class="stack-pages" />\
+    <span class="stack-cover" />\
+    </a>\
+    </li>'
+  });
+
+  /* Published Article Type */
+  window.StackView.register_type({
+    name: 'published_article',
+    match: function(item) {
+      return item.format === 'Published Article';
+    },
+
+    adapter: function(item, options) {
+      return {
+        heat: window.StackView.utils.get_heat(item.shelfrank || 0),
+        book_height: get_height(options, item),
+        book_thickness: get_thickness(options, item),
+        link: '#' + item.id,
+        id: item.id,
+        title: item.title,
+        author: get_author(item),
+        year: item.pub_date_numeric,
+        rawItem: item,
+        hbs: is_hbs(item),
+        hollis: is_hollis(item)
+      };
+    },
+
+    template: '\
+    <li class="stack-item stack-book hbs-type published-article heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>" data-hollis="<%= hollis %>">\
+    <a href="<%= link %>">\
+    <span class="spine-text">\
+    <span class="spine-title"><%= title %></span>\
+    <span class="spine-author"><%= author %></span>\
+    </span>\
+    <span class="spine-year"><%= year %></span>\
+    <span class="stack-pages" />\
+    <span class="stack-cover" />\
+    </a>\
+    </li>'
+  });
+
+  /* Case Material Type */
+  window.StackView.register_type({
+    name: 'case_material',
+    match: function(item) {
+      return {
+        'HBS Case Material': true,
+        'Non-HBS Case Material': true
+      }[item.format];
+    },
+
+    adapter: function(item, options) {
+      return {
+        heat: window.StackView.utils.get_heat(item.shelfrank || 0),
+        book_height: get_height(options, item),
+        book_thickness: get_thickness(options, item),
+        link: '#' + item.id,
+        id: item.id,
+        title: item.title,
+        author: get_author(item),
+        year: item.pub_date_numeric,
+        rawItem: item,
+        hbs: is_hbs(item),
+        hollis: is_hollis(item)
+      };
+    },
+
+    template: '\
+    <li class="stack-item stack-book hbs-type case-material heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>" data-hollis="<%= hollis %>">\
+    <a href="<%= link %>">\
+    <span class="spine-text">\
+    <span class="spine-title"><%= title %></span>\
+    <span class="spine-author"><%= author %></span>\
+    </span>\
+    <span class="spine-year"><%= year %></span>\
+    <span class="stack-pages" />\
+    <span class="stack-cover" />\
+    </a>\
+    </li>'
+  });
+
+  /* Teaching and Training Material Type */
+  window.StackView.register_type({
+    name: 'teaching_material',
+    match: function(item) {
+      return {
+        'HBS Teaching and Training Material': true,
+        'Non-HBS Teaching and Training Material': true
+      }[item.format];
+    },
+
+    adapter: function(item, options) {
+      return {
+        heat: window.StackView.utils.get_heat(item.shelfrank || 0),
+        book_height: get_height(options, item),
+        book_thickness: get_thickness(options, item),
+        link: '#' + item.id,
+        id: item.id,
+        title: item.title,
+        author: get_author(item),
+        year: item.pub_date_numeric,
+        rawItem: item,
+        hbs: is_hbs(item),
+        hollis: is_hollis(item)
+      };
+    },
+
+    template: '\
+    <li class="stack-item stack-book hbs-type teaching-material heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>" data-hollis="<%= hollis %>">\
+    <a href="<%= link %>">\
+    <span class="spine-text">\
+    <span class="spine-title"><%= title %></span>\
+    <span class="spine-author"><%= author %></span>\
+    </span>\
+    <span class="spine-year"><%= year %></span>\
+    <span class="stack-pages" />\
+    <span class="stack-cover" />\
+    </a>\
+    </li>'
+  });
+
+  /* Unpublished Work Type */
+  window.StackView.register_type({
+    name: 'unpublished',
+    match: function(item) {
+      return item.format === 'Unpublished Work';
+    },
+
+    adapter: function(item, options) {
+      return {
+        heat: window.StackView.utils.get_heat(item.shelfrank || 0),
+        book_height: get_height(options, item),
+        book_thickness: get_thickness(options, item),
+        link: '#' + item.id,
+        id: item.id,
+        title: item.title,
+        author: get_author(item),
+        year: item.pub_date_numeric,
+        rawItem: item,
+        hbs: is_hbs(item),
+        hollis: is_hollis(item)
+      };
+    },
+
+    template: '\
+    <li class="stack-item stack-book hbs-type unpublished heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>" data-hollis="<%= hollis %>">\
+    <a href="<%= link %>">\
+    <span class="spine-text">\
+    <span class="spine-title"><%= title %></span>\
+    <span class="spine-author"><%= author %></span>\
+    </span>\
+    <span class="spine-year"><%= year %></span>\
+    <span class="stack-pages" />\
+    <span class="stack-cover" />\
+    </a>\
+    </li>'
+  });
+
+
+  /* Unidentified Type */
+  window.StackView.register_type({
+    name: 'unidentified',
+    match: function(item) {
+      return true;
+    },
+
+    adapter: function(item, options) {
+      return {
+        heat: window.StackView.utils.get_heat(item.shelfrank || 0),
+        book_height: get_height(options, item),
+        book_thickness: get_thickness(options, item),
+        link: '#' + item.id,
+        id: item.id,
+        title: item.title,
+        author: get_author(item),
+        year: item.pub_date_numeric,
+        rawItem: item,
+        hbs: is_hbs(item),
+        hollis: is_hollis(item)
+      };
+    },
+
+    template: '\
+    <li class="stack-item stack-book hbs-type unidentified heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;" data-stackid="<%= id %>" data-hbs="<%= hbs %>" data-hollis="<%= hollis %>">\
+    <a href="<%= link %>">\
+    <span class="spine-text">\
+    <span class="spine-title"><%= title %></span>\
+    <span class="spine-author"><%= author %></span>\
+    </span>\
+    <span class="spine-year"><%= year %></span>\
+    <span class="stack-pages" />\
+    <span class="stack-cover" />\
+    </a>\
+    </li>'
   });
 })(jQuery, window);

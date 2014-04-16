@@ -268,17 +268,14 @@
 }
 
 .hbs-type > a {
-  background:#ddd;
-  border-color:#ccc;
   border-radius:0;
 
   .stack-pages {
-    background:#eee;
-    border-radius:0;
-    border-color:#ccc;
+    border-radius:0 0 0 2px;
     border-width:2px;
-    bottom:-2px;
+    bottom:-3px;
     right:-12px;
+    background:#ccebff;
 
     &:after {
       display:none;
@@ -286,12 +283,81 @@
   }
 
   .stack-cover {
-    background:#eee;
     border-radius:0;
-    border-color:#ccc;
     height:3px;
     top:-5px;
     right:1px;
+  }
+
+  .spine-title {
+    padding-left:12px;
+  }
+}
+
+.hbs-type.active > a .stack-pages {
+  background:$skyPink;
+}
+
+.working-paper > a:before {
+  content:url(asset-path('stackview/icon-working-paper.png'));
+  position:absolute;
+  left:0;
+  top:7px;
+  opacity:0.8;
+}
+
+.presentation > a:before {
+  content:url(asset-path('stackview/icon-presentation.png'));
+  position:absolute;
+  left:0;
+  top:7px;
+  opacity:0.8;
+}
+
+.published-article > a:before {
+  content:url(asset-path('stackview/icon-published-article.png'));
+  position:absolute;
+  left:4px;
+  top:10px;
+  opacity:0.8;
+}
+
+.case-material > a:before {
+  content:url(asset-path('stackview/icon-case-material.png'));
+  position:absolute;
+  left:6px;
+  top:9px;
+  opacity:0.8;
+}
+
+.teaching-material > a:before {
+  content:url(asset-path('stackview/icon-teaching.png'));
+  position:absolute;
+  left:4px;
+  top:10px;
+  opacity:0.8;
+}
+
+.unpublished > a:before {
+  content:url(asset-path('stackview/icon-unpublished.png'));
+  position:absolute;
+  left:2px;
+  top:7px;
+  opacity:0.8;
+}
+
+.unidentified > a {
+  background:#ddd;
+  border-color:#ccc;
+
+  .stack-pages {
+    background:#eee;
+    border-color:#ccc;
+  }
+
+  .stack-cover {
+    background:#eee;
+    border-color:#ccc;
   }
 }
 
