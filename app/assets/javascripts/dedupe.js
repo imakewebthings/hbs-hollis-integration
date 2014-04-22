@@ -29,6 +29,9 @@
     );
     $.unique(target.source_record.collection);
 
+    if (source.topic[0].length === 1) {
+      console.log('oops');
+    }
     target.topic = target.topic || [];
     target.topic[0] = target.topic[0] ? target.topic[0].split(';') : [];
     source.topic = source.topic || [];

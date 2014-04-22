@@ -5,7 +5,7 @@ script#publication-template type='text/x-template'
       h2.pubtitle <%= title %> <%= pub_date ? '('+pub_date_numeric+')' : '' %>
       | <% } %>
 
-      h3.format <%= format %>
+      | <h3 class="<%= fmtclass %> format"><%= format %></h3>
         
       | <% if (containing_book) { %>
       p.containing-book Appears in <i><%= containing_book %></i>

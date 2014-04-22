@@ -14,6 +14,41 @@
   font-size:1.1em;
   color:#555;
   margin-bottom:12px;
+
+  &.published-article:before {
+    content:url(asset-path('stackview/icon-published-article.png'));
+    margin-right:5px;
+  }
+
+  &.working-paper:before {
+    content:url(asset-path('stackview/icon-working-paper.png'));
+    margin-right:5px;
+  }
+
+  &.presentation:before {
+    content:url(asset-path('stackview/icon-presentation.png'));
+    margin-right:5px;
+  }
+
+  &.hbs-case-material, &.non-hbs-case-material {
+    &:before {
+      content:url(asset-path('stackview/icon-case-material.png'));
+      margin-right:5px;
+    }
+  }
+
+  &.hbs-teaching-and-training-material,
+  &.non-hbs-teaching-and-training-material {
+    &:before {
+      content:url(asset-path('stackview/icon-teaching.png'));
+      margin-right:5px;
+    }
+  }
+
+  &.unpublished-work:before {
+    content:url(asset-path('stackview/icon-unpublished.png'));
+    margin-right:5px;
+  }
 }
 
 .creators {

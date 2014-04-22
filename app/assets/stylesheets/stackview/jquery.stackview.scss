@@ -301,7 +301,7 @@
 .working-paper > a:before {
   content:url(asset-path('stackview/icon-working-paper.png'));
   position:absolute;
-  left:0;
+  left:5px;
   top:7px;
   opacity:0.8;
 }
@@ -309,40 +309,40 @@
 .presentation > a:before {
   content:url(asset-path('stackview/icon-presentation.png'));
   position:absolute;
-  left:0;
-  top:7px;
+  left:6px;
+  top:6px;
   opacity:0.8;
 }
 
 .published-article > a:before {
   content:url(asset-path('stackview/icon-published-article.png'));
   position:absolute;
-  left:4px;
-  top:10px;
+  left:6px;
+  top:6px;
   opacity:0.8;
 }
 
 .case-material > a:before {
   content:url(asset-path('stackview/icon-case-material.png'));
   position:absolute;
-  left:6px;
-  top:9px;
+  left:7px;
+  top:5px;
   opacity:0.8;
 }
 
 .teaching-material > a:before {
   content:url(asset-path('stackview/icon-teaching.png'));
   position:absolute;
-  left:4px;
-  top:10px;
+  left:7px;
+  top:7px;
   opacity:0.8;
 }
 
 .unpublished > a:before {
   content:url(asset-path('stackview/icon-unpublished.png'));
   position:absolute;
-  left:2px;
-  top:7px;
+  left:6px;
+  top:6px;
   opacity:0.8;
 }
 

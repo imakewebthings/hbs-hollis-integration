@@ -28,6 +28,7 @@
     normalized.topics = data.topic ? data.topic[0].split(';') : [];
     normalized.parameterize = parameterize;
     normalized.lcsh = data.lcsh ? data.lcsh : [];
+    normalized.fmtclass = data.format.toLowerCase().replace(/ /g, '-');
 
     if (data.note) {
       $.each(data.note, function(i, note) {
