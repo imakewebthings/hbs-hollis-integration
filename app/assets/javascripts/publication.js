@@ -11,7 +11,9 @@
   }
 
   function unloadPublication() {
-    $('#publication').empty().append($original);
+    if (location.href.indexOf('units') === -1) {
+      $('#publication').empty().append($original);
+    }
   }
 
   function normalizeData(data) {
@@ -135,6 +137,7 @@
 
   function checkHash() {
     var id = location.hash.split('#')[1];
+    console.log('checkHash')
 
     if (!$original) {
       saveOriginal();
@@ -142,9 +145,11 @@
 
     if (id && id != lastId) {
       loadPublication(id);
+      console.log('load ' + id)
     }
     else if (!id) {
       unloadPublication();
+      console.log('unload')
     }
     lastId = id;
     highlight();
