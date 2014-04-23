@@ -29,15 +29,15 @@
     );
     $.unique(target.source_record.collection);
 
-    if (source.topic[0].length === 1) {
-      console.log('oops');
+    var sourceTopics = [];
+    var targetTopics = [];
+    if (source.topic && source.topic[0]) {
+      sourceTopics = source.topic[0].split(';');
     }
-    target.topic = target.topic || [];
-    target.topic[0] = target.topic[0] ? target.topic[0].split(';') : [];
-    source.topic = source.topic || [];
-    var sourceTopic = source.topic[0] ? source.topic[0].split(';') : [];
-    var targetTopic = target.topic[0].concat(sourceTopic).join(';');
-    target.topic = targetTopic ? [targetTopic] : null;
+    if (target.topic && target.topic[0]) {
+      targetTopics = target.topic[0].split(';');
+    }
+    target.topic = [targetTopics.concat(sourceTopics).join(';')];
   }
 
   function updateRendering($current, currentData) {
@@ -59,10 +59,11 @@
         var $current = $(this);
         var currentData = $current.data('stackviewItem');
         var year = currentData.pub_date_numeric;
-        var title = currentData.title.toLowerCase();
+        var title = currentData.title ? currentData.title.toLowerCase() : '';
         var previousData = $previous.data('stackviewItem');
         var previousYear = previousData.pub_date_numeric;
-        var previousTitle = previousData.title.toLowerCase();
+        var previousTitle = previousData.title ?
+                            previousData.title.toLowerCase() : '';
 
         title = title.replace('&', '').replace('and', '');
         previousTitle = previousTitle.replace('&', '').replace('and', '');
