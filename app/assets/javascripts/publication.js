@@ -19,8 +19,8 @@
   function normalizeData(data) {
     var normalized = $.extend(true, {}, data);
     var hollisBase = 'http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|';
-    var isHbs = data.source_record.collection === 'hbs_edu';
-    var isHollis = data.source_record.collection === 'hollis_catalog';
+    var isHbs = data.collection === 'hbs_edu';
+    var isHollis = data.collection === 'hollis_catalog';
     normalized.description = null;
     normalized.containing_book = null;
     normalized.hbs_url = null;
@@ -44,7 +44,7 @@
       });
     }
 
-    if ($.isArray(data.source_record.collection)) {
+    if ($.isArray(data.collection)) {
       if (data.url) {
         normalized.hbs_url = $.grep(data.url, function(url) {
           return url.match(/hbs\.edu/);

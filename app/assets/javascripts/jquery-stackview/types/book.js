@@ -146,21 +146,21 @@
 	};
 
   var is_hbs = function(item) {
-    if ($.isArray(item.source_record.collection)) {
-      return !!$.grep(item.source_record.collection, function(c) {
+    if ($.isArray(item.collection)) {
+      return !!$.grep(item.collection, function(c) {
         return c === 'hbs_edu';
       }).length;
     }
-    return item.source_record.collection === 'hbs_edu';
+    return item.collection === 'hbs_edu';
   };
 
   var is_hollis = function(item) {
-    if ($.isArray(item.source_record.collection)) {
-      return !!$.grep(item.source_record.collection, function(c) {
+    if ($.isArray(item.collection)) {
+      return !!$.grep(item.collection, function(c) {
         return c === 'hollis_catalog';
       }).length;
     }
-    return item.source_record.collection === 'hollis_catalog';
+    return item.collection === 'hollis_catalog';
   };
 
 	/*

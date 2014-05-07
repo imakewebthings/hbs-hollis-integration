@@ -20,14 +20,12 @@
     });
 
     $.each([source, target], function(i, obj) {
-      if (!$.isArray(obj.source_record.collection)) {
-        obj.source_record.collection = [obj.source_record.collection];
+      if (!$.isArray(obj.collection)) {
+        obj.collection = [obj.collection];
       }
     });
-    target.source_record.collection = target.source_record.collection.concat(
-      source.source_record.collection
-    );
-    $.unique(target.source_record.collection);
+    target.collection = target.collection.concat(source.collection);
+    $.unique(target.collection);
 
     var sourceTopics = [];
     var targetTopics = [];
@@ -41,10 +39,10 @@
   }
 
   function updateRendering($current, currentData) {
-    var isHbs = !!$.grep(currentData.source_record.collection, function(c) {
+    var isHbs = !!$.grep(currentData.collection, function(c) {
       return c === 'hbs_edu';
     }).length;
-    var isHollis = !!$.grep(currentData.source_record.collection, function(c) {
+    var isHollis = !!$.grep(currentData.collection, function(c) {
       return c === 'hollis_catalog';
     }).length;
     $current.attr({
@@ -81,4 +79,7 @@
 
   $document.on('stackview.init', init);
   $document.on('stackview.pageload', dedupe);
+
+  window.StackView.utils.updateRendering = updateRendering;
+  window.StackView.utils.concatData = concatData;
 })();

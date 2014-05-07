@@ -32,4 +32,5 @@
 //= require transitions
 //= require controls
 //= require dedupe
+//= require topicdupe
 //= require coauthors
