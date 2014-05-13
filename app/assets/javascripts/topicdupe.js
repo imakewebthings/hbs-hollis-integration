@@ -8,6 +8,7 @@
       if (itemData) {
         window.StackView.utils.concatData(itemData, targetData);
         window.StackView.utils.updateRendering($target, targetData);
+        targetData.id_inst = itemData.id_inst;
       }
     }, 'jsonp');
   }
