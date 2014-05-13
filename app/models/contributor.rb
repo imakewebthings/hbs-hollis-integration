@@ -11,6 +11,9 @@
 #  title             :string(255)
 #  name_slug         :string(255)
 #  primary_unit_slug :string(255)
+#  lc_names          :string(255)
+#  brief_biography   :text
+#  full_biography    :text
 #
 
 class Contributor < ActiveRecord::Base
